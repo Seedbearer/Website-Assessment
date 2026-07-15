@@ -73,7 +73,14 @@ export async function POST(req: NextRequest) {
   // so we can't rely on Postgres to hand back the generated id. Generating it here avoids that need.
   const submissionId = randomUUID();
 
-  const writer = getSubmissionWriter();
+  let writer;
+  try {
+    writer = getSubmissionWriter();
+  } catch (err) {
+    console.error("assessment/submit: Supabase is not configured", err);
+    return NextResponse.json({ error: "Could not save your submission. Please try again." }, { status: 500 });
+  }
+
   const { error } = await writer.from("submissions").insert({
     id: submissionId,
     first_name: body.firstName,
