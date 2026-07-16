@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://seedbearerfamily.com/assessment</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/honour-framework</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/reading</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/about</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/blog</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/assessment/quiz</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/coaching</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com/assessment/results</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://seedbearerfamily.com</loc><lastmod>2026-07-15T22:54:57.642Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/assessment/results</loc><lastmod>2026-07-16T18:38:07.932Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/assessment</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/coaching</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/assessment/quiz</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/honour-framework</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/about</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/reading</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/blog</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/admin/login</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000</loc><lastmod>2026-07-16T18:38:07.933Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

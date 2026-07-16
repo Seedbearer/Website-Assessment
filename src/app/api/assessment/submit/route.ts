@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { getSubmissionWriter } from "@/lib/supabase-admin";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { calculateSeedType } from "@/lib/scoring";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { isRateLimited } from "@/lib/rate-limit";
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 
   let writer;
   try {
-    writer = getSubmissionWriter();
+    writer = getSupabaseAdmin();
   } catch (err) {
     console.error("assessment/submit: Supabase is not configured", err);
     return NextResponse.json({ error: "Could not save your submission. Please try again." }, { status: 500 });

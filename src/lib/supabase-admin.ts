@@ -7,11 +7,10 @@ let cached: SupabaseClient | null = null;
 // before Netlify's runtime environment variables are necessarily available. Creating the client only
 // on first request (not at module scope) means a missing env var fails a request, not the build.
 //
-// Returns a service-role client when SUPABASE_SERVICE_ROLE_KEY is configured, otherwise falls back to
-// the anon/publishable key. The anon-key path only works for inserts allowed by RLS (e.g. the public
-// assessment submission) — it cannot read data back. Once a service-role key is added, this starts
-// using it automatically with no code changes elsewhere.
-export function getSubmissionWriter(): SupabaseClient {
+// Service-role client, bypasses RLS. Used by the admin dashboard (reads/writes everything) and by
+// the public assessment submit route (falls back to the anon/publishable key if no service-role key
+// is configured yet, which only supports the anon-insert-only path — not reads).
+export function getSupabaseAdmin(): SupabaseClient {
   if (cached) return cached;
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
