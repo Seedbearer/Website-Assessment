@@ -26,7 +26,7 @@ export async function notifyAssessmentCompleted(params: {
   ].filter(Boolean);
 
   try {
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "Seedbearer Assessments <assessments@seedbearerfamily.com>",
       to,
       subject: `${urgentPrefix}New assessment completed — ${params.firstName}`,
@@ -39,6 +39,12 @@ export async function notifyAssessmentCompleted(params: {
         .filter(Boolean)
         .join("\n"),
     });
+    // The Resend SDK returns { data, error } rather than throwing on API-level failures
+    // (e.g. an unverified sending domain) — that error must be checked explicitly, or a
+    // failure like "domain not verified" would be silently swallowed and look like success.
+    if (error) {
+      console.error("notifyAssessmentCompleted: Resend API returned an error", error);
+    }
   } catch (err) {
     console.error("notifyAssessmentCompleted: failed to send", err);
   }
