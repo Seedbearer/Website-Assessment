@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { isAuthorizedAdmin } from "@/lib/require-admin";
 
 const ALLOWED_FIELDS = ["family_name", "coach_notes", "pipeline_stage"] as const;
 
 export async function PATCH(req: NextRequest, { params }: { params: { code: string } }) {
+  if (!(await isAuthorizedAdmin())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await req.json().catch(() => null);
   if (!body) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });

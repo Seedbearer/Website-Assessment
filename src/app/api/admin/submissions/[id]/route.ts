@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { isAuthorizedAdmin } from "@/lib/require-admin";
 
 // Editable fields on the submission detail view: coach's seed-type read, pipeline stage, and
-// response tracking. Auth is enforced by middleware (matcher covers /api/admin/:path*).
+// response tracking. Auth is enforced by middleware (matcher covers /api/admin/:path*) and,
+// as a defense-in-depth backstop, checked again directly below.
 const ALLOWED_FIELDS = ["seed_type_coach", "pipeline_stage", "responded", "response_date", "coach_notes"] as const;
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  if (!(await isAuthorizedAdmin())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await req.json().catch(() => null);
   if (!body) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });

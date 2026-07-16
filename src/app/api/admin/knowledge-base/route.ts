@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { isAuthorizedAdmin } from "@/lib/require-admin";
 
 export async function POST(req: NextRequest) {
+  if (!(await isAuthorizedAdmin())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await req.json().catch(() => null);
   const { submissionId, algorithmType, coachType, overridden, overrideSignal, woundPattern, soilPattern, insight } = body ?? {};
 

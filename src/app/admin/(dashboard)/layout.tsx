@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 import SignOutButton from "@/components/admin/SignOutButton";
 
 const ADMIN_NAV = [
@@ -7,7 +9,20 @@ const ADMIN_NAV = [
   { href: "/admin/families", label: "Families" },
 ];
 
-export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
+// Defense in depth: middleware is the primary gate for /admin routes, but every page under
+// this layout also checks the session directly here. Belt-and-suspenders — if middleware
+// ever fails to run for any reason (a platform-specific quirk, a config change, a new route
+// added without updating the matcher), this still refuses to render admin data.
+export default async function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user?.email !== process.env.ADMIN_EMAIL) {
+    redirect("/admin/login");
+  }
+
   return (
     <div className="min-h-screen bg-linen">
       <header className="bg-soil text-linen">

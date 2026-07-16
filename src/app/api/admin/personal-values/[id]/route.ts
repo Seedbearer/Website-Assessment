@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { isAuthorizedAdmin } from "@/lib/require-admin";
 
 type ValueSlot = { value_order: number; value_name: string; value_definition: string };
 
 // Upserts all five value slots for a submission in one call — simpler than five separate PATCHes
 // for a form that's always edited and saved as a whole unit.
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  if (!(await isAuthorizedAdmin())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const body = await req.json().catch(() => null);
   const values: ValueSlot[] = body?.values;
   if (!Array.isArray(values) || values.length === 0) {
