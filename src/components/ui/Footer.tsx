@@ -22,6 +22,9 @@ export default function Footer() {
           <p className="text-xs text-dark-gray">
             &copy; {new Date().getFullYear()} Seedbearer Family. All rights reserved.
           </p>
+          <a href="/login" className="text-xs text-bark underline hover:text-soil transition">
+            Family / Personal Dashboard Sign In
+          </a>
         </div>
       </div>
     </footer>
