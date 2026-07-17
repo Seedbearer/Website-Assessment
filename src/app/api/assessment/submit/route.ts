@@ -126,15 +126,18 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Fire-and-forget — a failed notification must never block the person's own results.
-  notifyAssessmentCompleted({
+  // Awaited (not truly fire-and-forget) — Netlify's serverless functions can freeze/terminate
+  // execution immediately after the response is returned, killing any in-flight work that wasn't
+  // explicitly waited for. A failed *send* still never blocks or breaks the person's own results,
+  // since notifyAssessmentCompleted catches its own errors internally and never throws here.
+  await notifyAssessmentCompleted({
     submissionId,
     firstName: body.firstName,
     seedType: scoring.seedType,
     priorityResponse: scoring.priorityResponse,
     urgentQ12: scoring.urgentQ12,
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  }).catch((err) => console.error("assessment/submit: notification failed", err));
+  });
 
   return NextResponse.json({ seedType: scoring.seedType, submissionId });
 }
