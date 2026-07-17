@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+
+[build.environment]
+  # tinacms build (schema/GraphQL codegen) plus next build together exceed Netlify's default
+  # Node heap limit and OOM-kill the build. Raise it — Netlify's build containers have enough
+  # RAM to support this.
+  NODE_OPTIONS = "--max-old-space-size=4096"
