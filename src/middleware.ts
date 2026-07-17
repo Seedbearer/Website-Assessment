@@ -28,6 +28,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminPage = pathname.startsWith("/admin") && pathname !== "/admin/login";
   const isAdminApi = pathname.startsWith("/api/admin");
+  const isMemberPage = pathname.startsWith("/dashboard");
 
   if (isAdminPage || isAdminApi) {
     const isAuthorizedAdmin = user?.email === process.env.ADMIN_EMAIL;
@@ -40,9 +41,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (isMemberPage && !user) {
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
   return response;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*", "/dashboard/:path*"],
 };

@@ -86,7 +86,6 @@ export default function AssessmentLandingPage() {
             Ten minutes. Twelve questions. A personal response within 48 hours. No payment
             required.
           </p>
-          {/* Phase 2 builds the actual quiz at /assessment/quiz — this links there now as a placeholder */}
           <div className="mt-8">
             <Button href="/assessment/quiz" variant="inverted">
               Start the Seed Assessment — It&rsquo;s Free
@@ -96,6 +95,9 @@ export default function AssessmentLandingPage() {
             No spam. No sales pitch. Just an honest reflection — and a real response from a real
             person.
           </p>
+          <a href="/assessment/family" className="mt-6 text-sm text-straw underline hover:text-linen transition">
+            Taking this as a family? Start a Family Assessment →
+          </a>
         </div>
       </section>
     </>

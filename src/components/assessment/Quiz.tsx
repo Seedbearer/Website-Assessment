@@ -64,7 +64,16 @@ export default function Quiz() {
 
   const [slideIndex, setSlideIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>(EMPTY_ANSWERS);
-  const [firstName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState(() => {
+    if (typeof window === "undefined") return "";
+    const raw = sessionStorage.getItem("seedbearer_family_context");
+    if (!raw) return "";
+    try {
+      return JSON.parse(raw).memberName ?? "";
+    } catch {
+      return "";
+    }
+  });
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -118,6 +127,9 @@ export default function Quiz() {
     setSubmitting(true);
     setError("");
     try {
+      const familyContextRaw = sessionStorage.getItem("seedbearer_family_context");
+      const familyContext = familyContextRaw ? JSON.parse(familyContextRaw) : null;
+
       const res = await fetch("/api/assessment/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -125,6 +137,9 @@ export default function Quiz() {
           firstName,
           email,
           turnstileToken,
+          familyCode: familyContext?.familyCode,
+          memberName: familyContext?.memberName,
+          memberRole: familyContext?.memberRole,
           ...answers,
         }),
       });
@@ -133,9 +148,16 @@ export default function Quiz() {
         throw new Error(body.error || "Something went wrong submitting your assessment.");
       }
       const data = await res.json();
+      sessionStorage.removeItem("seedbearer_family_context");
       sessionStorage.setItem(
         "seedbearer_result",
-        JSON.stringify({ firstName, seedType: data.seedType, q9Internal: answers.q9Internal, q11Season: answers.q11Season })
+        JSON.stringify({
+          firstName,
+          seedType: data.seedType,
+          q9Internal: answers.q9Internal,
+          q11Season: answers.q11Season,
+          familyCode: familyContext?.familyCode,
+        })
       );
       router.push("/assessment/results");
     } catch (e) {

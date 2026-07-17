@@ -81,10 +81,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Could not save your submission. Please try again." }, { status: 500 });
   }
 
+  const familyCode: string | undefined = body.familyCode?.trim()?.toUpperCase() || undefined;
+  const memberName: string | undefined = body.memberName?.trim() || undefined;
+  const memberRole: string | undefined = body.memberRole || undefined;
+
   const { error } = await writer.from("submissions").insert({
     id: submissionId,
     first_name: body.firstName,
     email: body.email,
+    family_code: familyCode ?? null,
     q1_open: body.q1Open,
     q2_answer: body.q2Answer,
     q3_answers: body.q3Answers,
@@ -105,6 +110,20 @@ export async function POST(req: NextRequest) {
   if (error) {
     console.error("assessment/submit: Supabase insert failed", error);
     return NextResponse.json({ error: "Could not save your submission. Please try again." }, { status: 500 });
+  }
+
+  if (familyCode) {
+    const { error: memberError } = await writer.from("family_members").insert({
+      family_code: familyCode,
+      submission_id: submissionId,
+      member_name: memberName ?? body.firstName,
+      member_role: memberRole ?? null,
+    });
+    if (memberError) {
+      // Don't fail the whole submission over this — the person's results still matter even if
+      // the family link didn't save; log it so it can be manually reconciled.
+      console.error("assessment/submit: family_members insert failed", memberError);
+    }
   }
 
   // Fire-and-forget — a failed notification must never block the person's own results.

@@ -10,6 +10,7 @@ type StoredResult = {
   seedType: SeedType;
   q9Internal: string;
   q11Season: string;
+  familyCode?: string;
 };
 
 export default function AssessmentResultsPage() {
@@ -65,6 +66,19 @@ export default function AssessmentResultsPage() {
             I have also received your written answers and will respond personally within 48 hours.
           </p>
         </div>
+
+        {result.familyCode && (
+          <div className="mt-8 rounded-lg border border-mid-gray bg-off-white p-6 text-left">
+            <p className="text-lg text-dark-gray">
+              You&rsquo;re part of the <strong>{result.familyCode}</strong> family group. Once
+              enough family members have completed their assessment, sign in below to see the
+              shared family picture.
+            </p>
+            <a href="/login" className="mt-3 inline-block text-deep-green underline">
+              Set up your dashboard login →
+            </a>
+          </div>
+        )}
 
         <div className="mt-10 flex flex-col items-center gap-4">
           <Button href="/coaching">Book a discovery call</Button>
