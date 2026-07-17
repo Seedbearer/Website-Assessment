@@ -31,6 +31,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# tinacms — generated GraphQL client/schema artifacts, rebuilt on every `tinacms dev`/`build`
+/tina/__generated__
+/public/tina-admin
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
