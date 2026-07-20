@@ -67,7 +67,7 @@ export default function AssessmentResultsPage() {
           </p>
         </div>
 
-        {result.familyCode && (
+        {result.familyCode ? (
           <div className="mt-8 rounded-lg border border-mid-gray bg-off-white p-6 text-left">
             <p className="text-lg text-dark-gray">
               You&rsquo;re part of the <strong>{result.familyCode}</strong> family group. Once
@@ -78,7 +78,27 @@ export default function AssessmentResultsPage() {
               Set up your dashboard login →
             </a>
           </div>
+        ) : (
+          <div className="mt-8 rounded-lg border border-mid-gray bg-off-white p-6 text-left">
+            <p className="text-lg text-dark-gray">
+              Would you like other members of your family to take the assessment too? Start a
+              family group and see everyone&rsquo;s seed types together.
+            </p>
+            <a href="/assessment/family" className="mt-3 inline-block text-deep-green underline">
+              Start a Family Assessment →
+            </a>
+          </div>
         )}
+
+        <div className="mt-6 rounded-lg border border-mid-gray bg-off-white p-6 text-left">
+          <p className="text-lg text-dark-gray">
+            Would you like to come back and view your personal results any time — including a
+            practice and reflection for your seed type?
+          </p>
+          <a href="/login" className="mt-3 inline-block text-deep-green underline">
+            Set up your personal dashboard →
+          </a>
+        </div>
 
         <div className="mt-10 flex flex-col items-center gap-4">
           <Button href="/coaching">Book a discovery call</Button>
