@@ -42,6 +42,9 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
+          <Link href="/login" className="whitespace-nowrap text-sm hover:text-straw transition">
+            Sign In
+          </Link>
           <Link
             href="/assessment"
             className="whitespace-nowrap rounded bg-linen px-5 py-2.5 text-sm font-medium text-deep-green transition hover:bg-off-white"
@@ -81,6 +84,9 @@ export default function Nav() {
             onClick={() => setOpen(false)}
           >
             Take the Assessment
+          </Link>
+          <Link href="/login" className="text-sm hover:text-straw transition" onClick={() => setOpen(false)}>
+            Sign In
           </Link>
         </div>
       )}
