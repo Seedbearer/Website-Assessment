@@ -1,7 +1,6 @@
 export const metadata = {
   title: "Work With Me — Seedbearer Family",
-  description:
-    "A six-month program for one parent and one teenager, walking the same road at the same time.",
+  description: "A twelve-week program for parents ready to become who they were always meant to be.",
 };
 
 export default function CoachingPage() {
@@ -12,34 +11,32 @@ export default function CoachingPage() {
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <h1 className="font-lora text-3xl text-soil md:text-5xl">Work With Me</h1>
           <p className="mt-4 max-w-xl text-xl italic text-bark">
-            A six-month program for one parent and one teenager, walking the same road at the
-            same time.
+            A twelve-week program for parents ready to become who they were always meant to be.
           </p>
         </div>
       </section>
 
-      {/* Section 2 — Every seed needs its own soil */}
+      {/* Section 2 — Every seed needs the right soil */}
       <section className="bg-off-white px-4 py-16 md:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="font-lora text-2xl text-soil md:text-3xl">
-            Every seed needs its own soil — and then it needs the whole garden.
-          </h2>
+          <h2 className="font-lora text-2xl text-soil md:text-3xl">Every seed needs the right soil.</h2>
           <div className="mt-6 space-y-4 text-left text-lg leading-relaxed text-dark-gray">
             <p>
-              Most coaching helps a parent, or helps a teenager. This is different. For the first
-              five weeks, you and your teen each work with me one-on-one — biweekly sessions,
-              separate space, separate pace. You&rsquo;re not managing each other&rsquo;s growth.
-              You&rsquo;re each doing your own.
+              This program is built around two things happening every week: a shared class with a
+              small group of parents walking the same road, and a private coaching session just
+              for you.
             </p>
             <p>
-              Starting in week six, we bring you together. Joint sessions, still biweekly, where
-              what you&rsquo;ve each been working on individually starts becoming something you
-              carry as a family. That&rsquo;s the order on purpose — you can&rsquo;t build real
-              connection on identity you haven&rsquo;t found yet.
+              The class is where the teaching happens — twelve sessions moving through four
+              seasons: <strong>Winter</strong>, where we name what&rsquo;s real without shame;{" "}
+              <strong>Thaw</strong>, where you receive what you didn&rsquo;t get to receive the
+              first time around; <strong>Spring</strong>, where you discover the design underneath
+              the wound — your seed type, your values, your child&rsquo;s seed; and{" "}
+              <strong>Summer</strong>, where it becomes a system you actually live.
             </p>
             <p>
-              Alongside all of it: twelve classes, delivered online, walking through the same
-              ground this whole site stands on — identity, connection, becoming.
+              The coaching session is where it becomes yours — personal, one-on-one, working
+              through what the week&rsquo;s teaching actually means for your family.
             </p>
           </div>
         </div>
@@ -51,48 +48,49 @@ export default function CoachingPage() {
           <h2 className="font-lora text-2xl text-soil md:text-3xl">What&rsquo;s Included</h2>
           <div className="mt-6 grid gap-4 text-left md:grid-cols-2">
             {[
-              "Twelve online classes over six months",
-              "Biweekly one-on-one coaching for you",
-              "Biweekly one-on-one coaching for your teen",
-              "Joint parent-teen sessions from week six onward",
-              "A real person — me — in every session",
-              "No cohort of strangers, no automated content drip",
+              "Twelve weekly online classes, in a small group of parents doing this work together",
+              "Twelve weekly one-on-one coaching sessions, just you and me",
+              "Twelve weeks, September 1 through November 24",
             ].map((item) => (
               <div key={item} className="rounded-lg border border-mid-gray bg-off-white p-4 text-lg text-dark-gray">
                 {item}
               </div>
             ))}
           </div>
+          <p className="mt-8 text-lg leading-relaxed text-dark-gray">
+            This round is parent-focused. If you&rsquo;re hoping for your teenager to be coached
+            alongside you, that&rsquo;s coming in the next cohort — Founding Pilot families get
+            priority access when it opens.
+          </p>
         </div>
       </section>
 
-      {/* Section 4 — Investment + Founding Cohort */}
+      {/* Section 4 — Investment + Founding Pilot */}
       <section className="bg-soil px-4 py-20 md:px-8">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <h2 className="font-lora text-2xl text-linen md:text-3xl">Investment</h2>
-          <p className="mt-4 text-lg text-straw">$3,900 for the full six-month program.</p>
+          <p className="mt-4 text-lg text-straw">$2,800 for the full twelve-week program.</p>
 
           <div className="mt-10 w-full max-w-2xl rounded-lg border border-bark bg-linen p-8 text-left">
             <h3 className="text-center font-lora text-xl text-soil md:text-2xl">
-              Founding Cohort — Now Enrolling
+              Founding Pilot — Now Enrolling
             </h3>
             <p className="mt-4 text-lg leading-relaxed text-dark-gray">
-              I&rsquo;m opening this first round to a small group of families — five to eight — at
-              50% off: <strong>$1,950</strong>. In exchange, classes are delivered live, by me,
-              rather than pre-recorded, and I&rsquo;d ask for your honest feedback as we go. This
-              round shapes what the program becomes.
+              I&rsquo;m opening this first round to a small group — five to eight parents — at 50%
+              off: <strong>$1,400</strong>. This is a pilot: your honest feedback shapes what this
+              becomes, including the family version that follows. Classes are led live, by me.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-dark-gray">
-              Founding Cohort begins September 1, 2026. Spots are capped and will close once
+              Founding Pilot begins September 1, 2026. Spots are capped and will close once
               they&rsquo;re filled.
             </p>
 
             <div className="mt-8 flex justify-center">
               <a
-                href="mailto:james@seedbearerfamily.com?subject=Founding%20Cohort%20Application"
+                href="mailto:james@seedbearerfamily.com?subject=Founding%20Pilot%20Application"
                 className="inline-block rounded bg-deep-green px-8 py-4 text-lg font-medium text-linen transition hover:opacity-90"
               >
-                Apply for the Founding Cohort →
+                Apply for the Founding Pilot →
               </a>
             </div>
 
