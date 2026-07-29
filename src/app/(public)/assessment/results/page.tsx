@@ -3,11 +3,16 @@
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import { SEED_TYPE_INFO, type SeedType } from "@/lib/assessment-data";
+import { VIRTUE_INFO, type StandVirtue, type ReachVirtue, type GardenVirtue, type WalkVirtue } from "@/lib/story-assessment-data";
 import { soilReflection } from "@/lib/soil-reflection";
 
 type StoredResult = {
   firstName: string;
   seedType: SeedType;
+  standVirtue: StandVirtue;
+  reachVirtue: ReachVirtue;
+  gardenVirtue: GardenVirtue;
+  walkVirtue: WalkVirtue;
   q9Internal: string;
   q11Season: string;
   familyCode?: string;
@@ -43,6 +48,7 @@ export default function AssessmentResultsPage() {
 
   const info = SEED_TYPE_INFO[result.seedType];
   const reflection = soilReflection(result.q9Internal, result.q11Season);
+  const virtues = [result.standVirtue, result.reachVirtue, result.gardenVirtue, result.walkVirtue].filter(Boolean);
 
   return (
     <section className="bg-linen px-4 py-20 md:px-8">
@@ -58,6 +64,20 @@ export default function AssessmentResultsPage() {
         {reflection && (
           <div className="mt-8 rounded-lg border border-mid-gray bg-off-white p-6 text-left">
             <p className="text-lg leading-relaxed text-dark-gray">{reflection}</p>
+          </div>
+        )}
+
+        {virtues.length > 0 && (
+          <div className="mt-8">
+            <p className="text-sm uppercase tracking-widest text-bark">Four seasons, four choices — yours to keep</p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {virtues.map((v) => (
+                <div key={v} className="rounded-lg border border-mid-gray bg-off-white p-4">
+                  <p className="font-lora text-lg text-soil">{VIRTUE_INFO[v].name}</p>
+                  <p className="mt-1 text-sm text-dark-gray">{VIRTUE_INFO[v].description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

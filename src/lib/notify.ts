@@ -8,7 +8,7 @@ export async function notifyAssessmentCompleted(params: {
   firstName: string;
   seedType: string;
   priorityResponse: boolean;
-  urgentQ12: boolean;
+  urgentText: boolean;
   siteUrl: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -19,10 +19,10 @@ export async function notifyAssessmentCompleted(params: {
   }
 
   const resend = new Resend(apiKey);
-  const urgentPrefix = params.urgentQ12 ? "[URGENT] " : "";
+  const urgentPrefix = params.urgentText ? "[URGENT] " : "";
   const flags = [
-    params.priorityResponse ? "priority response (Q9 numb/heavy)" : null,
-    params.urgentQ12 ? "Q12 urgent-keyword match" : null,
+    params.priorityResponse ? "priority response (internal soil: numb/heavy)" : null,
+    params.urgentText ? "urgent-keyword match in written answers" : null,
   ].filter(Boolean);
 
   try {

@@ -49,38 +49,84 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
         </a>
       </div>
 
-      {/* Open text panel */}
-      <div className="rounded-lg border border-mid-gray bg-off-white p-6">
-        <h2 className="font-lora text-lg text-soil">In their own words</h2>
-        <div className="mt-4 space-y-4">
-          <OpenAnswer label="Q1 — When most fully yourself" text={submission.q1_open} />
-          <OpenAnswer label="Q6 — The longing" text={submission.q6_open} />
-          <OpenAnswer label="Q12 — Why they're here" text={submission.q12_open} />
-        </div>
-      </div>
+      {submission.wound ? (
+        <>
+          {/* Story-flow submission */}
+          <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+            <h2 className="font-lora text-lg text-soil">In their own words</h2>
+            <div className="mt-4 space-y-4">
+              <OpenAnswer label="Wound cost — when has that cost you the most" text={submission.wound_cost} />
+              <OpenAnswer label="Closing — what they want to carry into their family" text={submission.closing_text} />
+              {submission.other_words && <OpenAnswer label="Other words on the wall" text={submission.other_words} />}
+            </div>
+          </div>
 
-      {/* Scored answers + soil snapshot */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-lg border border-mid-gray bg-off-white p-6">
-          <h2 className="font-lora text-lg text-soil">Scored answers</h2>
-          <dl className="mt-3 space-y-2 text-sm">
-            <AnswerRow label="Q2 — How you give" value={formatAnswer("q2", submission.q2_answer)} />
-            <AnswerRow label="Q3 — Energy source" value={formatAnswer("q3", submission.q3_answers)} />
-            <AnswerRow label="Q4 — The wound" value={formatAnswer("q4", submission.q4_answer)} />
-            <AnswerRow label="Q5 — Under pressure" value={formatAnswer("q5", submission.q5_answer)} />
-          </dl>
-        </div>
-        <div className="rounded-lg border border-mid-gray bg-off-white p-6">
-          <h2 className="font-lora text-lg text-soil">Soil snapshot</h2>
-          <dl className="mt-3 space-y-2 text-sm">
-            <AnswerRow label="Relational soil" value={formatAnswer("q7", submission.q7_relational)} />
-            <AnswerRow label="What relational soil needs" value={formatAnswer("q8", submission.q8_relational_need)} />
-            <AnswerRow label="Internal soil" value={formatAnswer("q9", submission.q9_internal)} />
-            <AnswerRow label="What internal soil needs" value={formatAnswer("q10", submission.q10_longing)} />
-            <AnswerRow label="Season" value={formatAnswer("q11", submission.q11_season)} />
-          </dl>
-        </div>
-      </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+              <h2 className="font-lora text-lg text-soil">Story signals</h2>
+              <dl className="mt-3 space-y-2 text-sm">
+                <AnswerRow label="Wound word" value={submission.wound} />
+                <AnswerRow label="Instinct" value={submission.instinct_text || submission.instinct_type} />
+                <AnswerRow label="Wound / instinct agree" value={submission.flag_for_review ? "No — flagged" : "Yes"} />
+              </dl>
+            </div>
+            <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+              <h2 className="font-lora text-lg text-soil">Four virtues</h2>
+              <dl className="mt-3 space-y-2 text-sm">
+                <AnswerRow label="Winter (stand)" value={submission.stand_virtue} />
+                <AnswerRow label="Thaw (reach)" value={submission.reach_virtue} />
+                <AnswerRow label="Spring (garden)" value={submission.garden_virtue} />
+                <AnswerRow label="Summer (walk)" value={submission.walk_virtue} />
+              </dl>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+            <h2 className="font-lora text-lg text-soil">Soil snapshot</h2>
+            <dl className="mt-3 grid gap-2 text-sm md:grid-cols-2">
+              <AnswerRow label="Relational soil" value={formatAnswer("q7", submission.q7_relational)} />
+              <AnswerRow label="What relational soil needs" value={formatAnswer("q8", submission.q8_relational_need)} />
+              <AnswerRow label="Internal soil" value={formatAnswer("q9", submission.q9_internal)} />
+              <AnswerRow label="What internal soil needs" value={formatAnswer("q10", submission.q10_longing)} />
+              <AnswerRow label="Season" value={formatAnswer("q11", submission.q11_season)} />
+            </dl>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Legacy 12-question submission */}
+          <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+            <h2 className="font-lora text-lg text-soil">In their own words</h2>
+            <div className="mt-4 space-y-4">
+              <OpenAnswer label="Q1 — When most fully yourself" text={submission.q1_open} />
+              <OpenAnswer label="Q6 — The longing" text={submission.q6_open} />
+              <OpenAnswer label="Q12 — Why they're here" text={submission.q12_open} />
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+              <h2 className="font-lora text-lg text-soil">Scored answers</h2>
+              <dl className="mt-3 space-y-2 text-sm">
+                <AnswerRow label="Q2 — How you give" value={formatAnswer("q2", submission.q2_answer)} />
+                <AnswerRow label="Q3 — Energy source" value={formatAnswer("q3", submission.q3_answers)} />
+                <AnswerRow label="Q4 — The wound" value={formatAnswer("q4", submission.q4_answer)} />
+                <AnswerRow label="Q5 — Under pressure" value={formatAnswer("q5", submission.q5_answer)} />
+              </dl>
+            </div>
+            <div className="rounded-lg border border-mid-gray bg-off-white p-6">
+              <h2 className="font-lora text-lg text-soil">Soil snapshot</h2>
+              <dl className="mt-3 space-y-2 text-sm">
+                <AnswerRow label="Relational soil" value={formatAnswer("q7", submission.q7_relational)} />
+                <AnswerRow label="What relational soil needs" value={formatAnswer("q8", submission.q8_relational_need)} />
+                <AnswerRow label="Internal soil" value={formatAnswer("q9", submission.q9_internal)} />
+                <AnswerRow label="What internal soil needs" value={formatAnswer("q10", submission.q10_longing)} />
+                <AnswerRow label="Season" value={formatAnswer("q11", submission.q11_season)} />
+              </dl>
+            </div>
+          </div>
+        </>
+      )}
 
       <ResponseTracking
         submissionId={submission.id}

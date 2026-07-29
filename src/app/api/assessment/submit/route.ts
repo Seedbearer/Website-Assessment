@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { calculateSeedType } from "@/lib/scoring";
+import { INSTINCT_OPTIONS } from "@/lib/story-assessment-data";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { isRateLimited } from "@/lib/rate-limit";
 import { notifyAssessmentCompleted } from "@/lib/notify";
@@ -9,18 +10,19 @@ import { notifyAssessmentCompleted } from "@/lib/notify";
 const REQUIRED_FIELDS = [
   "firstName",
   "email",
-  "q1Open",
-  "q2Answer",
-  "q3Answers",
-  "q4Answer",
-  "q5Answer",
-  "q6Open",
+  "wound",
+  "woundCost",
+  "standVirtue",
+  "reachVirtue",
+  "instinctType",
+  "gardenVirtue",
+  "walkVirtue",
+  "closingText",
   "q7Relational",
   "q8RelationalNeed",
   "q9Internal",
   "q10Longing",
   "q11Season",
-  "q12Open",
 ] as const;
 
 export async function POST(req: NextRequest) {
@@ -52,21 +54,16 @@ export async function POST(req: NextRequest) {
   }
 
   const scoring = calculateSeedType({
-    q1Open: body.q1Open,
-    q2Answer: body.q2Answer,
-    q3Answers: body.q3Answers,
-    q4Answer: body.q4Answer,
-    q5Answer: body.q5Answer,
-    q6Open: body.q6Open,
-    q7Relational: body.q7Relational,
-    q8RelationalNeed: body.q8RelationalNeed,
+    wound: body.wound,
+    otherWords: body.otherWords ?? "",
+    woundCost: body.woundCost,
+    instinctType: body.instinctType,
+    closingText: body.closingText,
     q9Internal: body.q9Internal,
-    q10Longing: body.q10Longing,
-    q11Season: body.q11Season,
-    q12Open: body.q12Open,
   });
 
-  const priorityResponse = scoring.priorityResponse || scoring.urgentQ12;
+  const instinctText = INSTINCT_OPTIONS.find((o) => o.type === body.instinctType)?.text ?? null;
+  const priorityResponse = scoring.priorityResponse || scoring.urgentText;
 
   // Client-generated id: with only the anon/publishable key configured (no service-role key yet),
   // the "anon can insert submissions" RLS policy allows the insert but not a SELECT-back of the row,
@@ -90,20 +87,23 @@ export async function POST(req: NextRequest) {
     first_name: body.firstName,
     email: body.email,
     family_code: familyCode ?? null,
-    q1_open: body.q1Open,
-    q2_answer: body.q2Answer,
-    q3_answers: body.q3Answers,
-    q4_answer: body.q4Answer,
-    q5_answer: body.q5Answer,
-    q6_open: body.q6Open,
+    wound: body.wound,
+    other_words: body.otherWords ?? null,
+    wound_cost: body.woundCost,
+    stand_virtue: body.standVirtue,
+    reach_virtue: body.reachVirtue,
+    instinct_type: body.instinctType,
+    instinct_text: instinctText,
+    garden_virtue: body.gardenVirtue,
+    walk_virtue: body.walkVirtue,
+    closing_text: body.closingText,
     q7_relational: body.q7Relational,
     q8_relational_need: body.q8RelationalNeed,
     q9_internal: body.q9Internal,
     q10_longing: body.q10Longing,
     q11_season: body.q11Season,
-    q12_open: body.q12Open,
     seed_type_algorithm: scoring.seedType,
-    flag_for_review: scoring.flagForReview || scoring.urgentQ12,
+    flag_for_review: scoring.flagForReview || scoring.urgentText,
     priority_response: priorityResponse,
   });
 
@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
     firstName: body.firstName,
     seedType: scoring.seedType,
     priorityResponse: scoring.priorityResponse,
-    urgentQ12: scoring.urgentQ12,
+    urgentText: scoring.urgentText,
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   });
 

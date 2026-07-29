@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { SEED_TYPE_INFO, type SeedType } from "@/lib/assessment-data";
+import { VIRTUE_INFO, type StandVirtue, type ReachVirtue, type GardenVirtue, type WalkVirtue } from "@/lib/story-assessment-data";
 import { soilReflection } from "@/lib/soil-reflection";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +19,9 @@ export default async function PersonalDashboardPage() {
 
   const { data: submission } = await supabase
     .from("submissions")
-    .select("id, first_name, family_code, seed_type_algorithm, seed_type_coach, q9_internal, q11_season")
+    .select(
+      "id, first_name, family_code, seed_type_algorithm, seed_type_coach, q9_internal, q11_season, stand_virtue, reach_virtue, garden_virtue, walk_virtue"
+    )
     .eq("email", user.email)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -48,6 +51,9 @@ export default async function PersonalDashboardPage() {
   const info = SEED_TYPE_INFO[seedType];
   const reflection = soilReflection(submission.q9_internal ?? "", submission.q11_season ?? "");
   const definedValues = (personalValues ?? []).filter((v) => v.value_name?.trim());
+  const virtues = [submission.stand_virtue, submission.reach_virtue, submission.garden_virtue, submission.walk_virtue].filter(
+    Boolean
+  ) as (StandVirtue | ReachVirtue | GardenVirtue | WalkVirtue)[];
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 md:px-8">
@@ -63,6 +69,20 @@ export default async function PersonalDashboardPage() {
           </div>
         )}
       </div>
+
+      {virtues.length > 0 && (
+        <div className="mt-10">
+          <h2 className="text-center font-lora text-lg text-soil">Four seasons, four choices — yours to keep</h2>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {virtues.map((v) => (
+              <div key={v} className="rounded-lg border border-mid-gray bg-off-white p-4">
+                <p className="font-lora text-lg text-soil">{VIRTUE_INFO[v].name}</p>
+                <p className="mt-1 text-sm text-dark-gray">{VIRTUE_INFO[v].description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="mt-10">
         <Link
