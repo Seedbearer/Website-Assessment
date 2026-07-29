@@ -14,11 +14,40 @@ file is the actual current state.
 ## What's built — all 5 phases complete and live
 1. **Website** — Next.js 14 App Router, Tailwind, brand design system in `tailwind.config.ts`
 2. **Seed Assessment** — `/assessment/quiz`, scoring engine (`src/lib/scoring.ts`), Supabase
-   storage, Cloudflare Turnstile, Resend completion-notification email
+   storage, Cloudflare Turnstile, Resend completion-notification email. **Redesigned as a
+   story-based narrative** (see "Story assessment redesign" below) — this replaced the original
+   12-question quiz outright.
 3. **Coach Dashboard + Blog** — `/admin/*` (magic-link auth, single admin email), TinaCMS blog
    at `/blog` with visual editor at `/tina-admin`
 4. **Family Dashboard** — `/assessment/family` (create), `/assessment/join/[code]`, `/dashboard/family`
 5. **Personal Member Dashboard** — `/dashboard`, `/dashboard/content/[seedType]`
+
+## Story assessment redesign (replaced the original 12-question quiz)
+The assessment is now a four-scene narrative (Winter → Thaw → Spring → Summer: a well, a wound-word
+carved in its wall, an instinct that reveals Seed Type, a distant garden, choosing one of two
+virtues each season) instead of a questionnaire. Full replacement, not a parallel mode — this was
+an explicit user decision, not something to reconsider without asking again.
+- **Data/content**: `src/lib/story-assessment-data.ts` (wound/instinct/virtue options + narrative
+  copy), `src/components/assessment/Quiz.tsx` (the whole flow)
+- **Scoring** (`src/lib/scoring.ts`, fully rewritten): two forced-choice signals now, not five —
+  `instinctType` is primary, `wound` is the refiner. They map to Seed Type via
+  `WOUND_TO_TYPE`/`INSTINCT_OPTIONS` in `story-assessment-data.ts`. Disagreement between the two
+  sets `flagForReview = true` but instinct still wins (doesn't silently pick one without flagging).
+- **The old Q7-Q11 soil/season questions are kept, appended after the narrative** — explicit user
+  decision, so the admin Soil Snapshot, family dashboard Soil Synthesis/Season Map, and the results
+  page's soil reflection keep working unchanged. Q9 (numb/heavy) is also still what drives
+  `priorityResponse` — this solved the spec's flagged "no Q9 equivalent in the new flow" gap
+  without inventing a new field, since Q9 was reinstated anyway.
+- **New: an 8-virtue axis** (Courage/Clarity, Joy/Faithfulness, Wonder/Wisdom, Adventure/Beauty —
+  one pair per season) is additive, not scored against Seed Type. Shown on the results page and
+  persisted on the personal dashboard (`/dashboard`) as "yours to keep."
+- **Migration `0003_story_assessment.sql`** adds the new columns (`wound`, `other_words`,
+  `wound_cost`, `stand_virtue`, `reach_virtue`, `instinct_type`, `instinct_text`, `garden_virtue`,
+  `walk_virtue`, `closing_text`). Old columns (`q1_open`, `q2_answer` through `q6_open`, `q12_open`)
+  are untouched, left nullable, for historical submissions only — nothing new writes to them.
+- **Admin submission detail view branches on `submission.wound` being set**: new story-flow
+  submissions show the new breakdown (wound/instinct/virtues), old submissions still show the
+  original Q1-Q6 breakdown. Both share the same Q7-Q11 soil snapshot section.
 
 ## Key deviations from the original spec (read before assuming the spec is current)
 - **Kit (ConvertKit) was never built.** Email is Resend (internal notification only) + Google
