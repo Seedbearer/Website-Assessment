@@ -63,9 +63,9 @@ an explicit user decision, not something to reconsider without asking again.
   - Added an **explicit transition slide** between the story and the reinstated Q7-Q11 questions
     ("We are moving to the portion of the assessment where we try to understand your current
     situation") — `TRANSITION_MESSAGE` in `story-assessment-data.ts`.
-  - **As of the last session this was pushed but not yet confirmed live** — verify
-    `https://seedbearerfamily.com/assessment/quiz` actually shows the reworded copy and that
-    multi-select wound picking works before assuming it's deployed.
+  - **Confirmed live** (checked 2026-07-31): `https://seedbearerfamily.com/assessment/quiz` shows
+    the reworded Winter copy and the multi-select ("Choose up to two") wound picker, matching
+    `story-assessment-data.ts`.
 
 ## Key deviations from the original spec (read before assuming the spec is current)
 - **Kit (ConvertKit) was never built.** Email is Resend (internal notification only) + Google
@@ -122,8 +122,13 @@ an explicit user decision, not something to reconsider without asking again.
 ## Still outstanding / pending
 - **`/reading`** — placeholder, waiting on `Seedbearer_Carrd_Website_Guide.docx` (Section 4 book
   list) — file not yet supplied.
-- **`/honour-framework`** — placeholder, waiting on `Seedbearer_Honour_Framework.docx` — file not
-  yet supplied.
+- **`/honour-framework`** — built 2026-07-31 from client-supplied HTML content (five-step
+  discipline framework, accountability conversation, age-specific tabs, hard-moments guidance).
+  Rebuilt as React/Tailwind matching the site's design system rather than using the raw HTML/CSS
+  supplied. Page: `src/app/(public)/honour-framework/page.tsx`; interactive age tabs extracted to
+  `src/components/honour-framework/AgeGuidance.tsx` (client component, since `page.tsx` exports
+  `metadata` and can't itself be `"use client"`). Verified locally in dev — content renders in
+  order and the age-tab switching works. Not yet deployed/pushed.
 - **Instagram link** — still a placeholder (`https://instagram.com`) in the footer, waiting on
   the real handle.
 - **About page photo** — placeholder, waiting on the client's actual photo.
@@ -132,13 +137,7 @@ an explicit user decision, not something to reconsider without asking again.
 - **Seed-type dashboard content** (`src/lib/seed-type-content.ts`) — placeholder practice/reflection
   text per type, written by Claude Code as structural filler. Real copy from the coach should
   replace it eventually; no code changes needed to swap it in.
-- **Deploy verification pending** — commit `e55aecb` (multi-select wound + narrative rewording +
-  transition slide, see above) was pushed at the end of the last session but not yet confirmed
-  live. First thing to check in a new session: does
-  `https://seedbearerfamily.com/assessment/quiz` show the reworded copy? If the deploy failed,
-  check Netlify's deploy log first (recent history: OOM during `tinacms build`, handled via
-  `netlify.toml`'s `NODE_OPTIONS`, and a Netlify usage-credits exhaustion that needed the user to
-  add credits/upgrade — both already resolved once, but could recur).
+- ~~Deploy verification pending~~ — confirmed live 2026-07-31 (see above).
 - Supabase project was found paused once already this project (free-tier auto-pause after
   inactivity) and the user restored it — if DB calls fail with `ENOTFOUND <project-ref>.supabase.co`
   again, that's the same thing recurring, not a new bug (see gotcha above).
