@@ -48,6 +48,24 @@ an explicit user decision, not something to reconsider without asking again.
 - **Admin submission detail view branches on `submission.wound` being set**: new story-flow
   submissions show the new breakdown (wound/instinct/virtues), old submissions still show the
   original Q1-Q6 breakdown. Both share the same Q7-Q11 soil snapshot section.
+- **Follow-up revision (commit `e55aecb`), from live client review of the flow**:
+  - Wound-word (Winter) is now **multi-select, up to two** — not single-choice. `wound` is
+    `text[]` in the DB (migration `0004_wound_multiselect.sql` converted existing single values to
+    single-element arrays). Scoring: confirmed if the instinct choice matches *any* selected
+    wound's mapped type (`WOUND_TO_TYPE`).
+  - The second Winter scene's "wound-echo" line now reflects all selected wounds *and* the
+    "other words" free text, not just one word.
+  - Several narrative passages were reworded after the client read through the live flow (post
+    wound-cost reflection in Winter, all of Thaw, the Spring instinct scene, the Spring garden
+    scene's closing paragraph, and Summer) — current wording lives in
+    `story-assessment-data.ts`'s `STORY_SCENES`; treat that file as the source of truth, not this
+    doc, if they diverge later.
+  - Added an **explicit transition slide** between the story and the reinstated Q7-Q11 questions
+    ("We are moving to the portion of the assessment where we try to understand your current
+    situation") — `TRANSITION_MESSAGE` in `story-assessment-data.ts`.
+  - **As of the last session this was pushed but not yet confirmed live** — verify
+    `https://seedbearerfamily.com/assessment/quiz` actually shows the reworded copy and that
+    multi-select wound picking works before assuming it's deployed.
 
 ## Key deviations from the original spec (read before assuming the spec is current)
 - **Kit (ConvertKit) was never built.** Email is Resend (internal notification only) + Google
@@ -114,11 +132,24 @@ an explicit user decision, not something to reconsider without asking again.
 - **Seed-type dashboard content** (`src/lib/seed-type-content.ts`) — placeholder practice/reflection
   text per type, written by Claude Code as structural filler. Real copy from the coach should
   replace it eventually; no code changes needed to swap it in.
-- **Supabase project may be paused** as of the last session — check this first in a new session
-  if anything database-related seems broken (see gotcha above).
+- **Deploy verification pending** — commit `e55aecb` (multi-select wound + narrative rewording +
+  transition slide, see above) was pushed at the end of the last session but not yet confirmed
+  live. First thing to check in a new session: does
+  `https://seedbearerfamily.com/assessment/quiz` show the reworded copy? If the deploy failed,
+  check Netlify's deploy log first (recent history: OOM during `tinacms build`, handled via
+  `netlify.toml`'s `NODE_OPTIONS`, and a Netlify usage-credits exhaustion that needed the user to
+  add credits/upgrade — both already resolved once, but could recur).
+- Supabase project was found paused once already this project (free-tier auto-pause after
+  inactivity) and the user restored it — if DB calls fail with `ENOTFOUND <project-ref>.supabase.co`
+  again, that's the same thing recurring, not a new bug (see gotcha above).
 
 ## Where to find things
 - Spec/reference docs: parent folder (`Marketing/Website/`), several `.docx` files
-- Full original spec: `Seedbearer_Claude_Code_Spec_v2.md` (same folder as this file's parent)
-- Migrations: `supabase/migrations/*.sql` — run manually in Supabase's SQL Editor, not via CLI
-  (no `supabase` CLI link was ever set up for this project)
+- Full original spec: `Seedbearer_Claude_Code_Spec_v2.md` (same folder as this file's parent) —
+  describes the original 12-question assessment; superseded by the story assessment above for
+  Phase 2, still accurate for everything else
+- Story assessment handoff spec: was supplied as a one-off doc, not stored in the repo — the
+  actual current implementation is `story-assessment-data.ts` + `Quiz.tsx`, treat those as truth
+- Migrations: `supabase/migrations/*.sql` — run manually in Supabase's SQL Editor, not via CLI (no
+  `supabase` CLI link was ever set up for this project). All four (`0001`-`0004`) have been run
+  against the live database as of the last session.
