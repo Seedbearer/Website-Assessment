@@ -12,6 +12,7 @@ import {
   GARDEN_VIRTUE_OPTIONS,
   WALK_VIRTUE_OPTIONS,
   STORY_SCENES,
+  TRANSITION_MESSAGE,
   type WoundValue,
   type StandVirtue,
   type ReachVirtue,
@@ -27,7 +28,7 @@ import OptionButton from "./OptionButton";
 const FOLLOWUP_QUESTIONS = QUESTIONS.filter((q) => ["q7", "q8", "q9", "q10", "q11"].includes(q.id)) as ChoiceQuestion[];
 
 type StoryAnswers = {
-  wound: WoundValue | "";
+  wound: WoundValue[];
   otherWords: string;
   woundCost: string;
   standVirtue: StandVirtue | "";
@@ -39,7 +40,7 @@ type StoryAnswers = {
 };
 
 const EMPTY_STORY: StoryAnswers = {
-  wound: "",
+  wound: [],
   otherWords: "",
   woundCost: "",
   standVirtue: "",
@@ -76,6 +77,7 @@ const FOLLOWUP_FIELD: Record<string, keyof FollowupAnswers> = {
 
 type Slide =
   | { kind: "scene"; scene: number }
+  | { kind: "transition" }
   | { kind: "question"; question: ChoiceQuestion }
   | { kind: "email" };
 
@@ -86,7 +88,7 @@ export default function Quiz() {
     const scenes: Slide[] = [0, 1, 2, 3, 4, 5, 6].map((scene) => ({ kind: "scene", scene }));
     const q7q8q9 = FOLLOWUP_QUESTIONS.slice(0, 3).map((question) => ({ kind: "question" as const, question }));
     const q10q11 = FOLLOWUP_QUESTIONS.slice(3).map((question) => ({ kind: "question" as const, question }));
-    return [...scenes, ...q7q8q9, { kind: "email" as const }, ...q10q11];
+    return [...scenes, { kind: "transition" as const }, ...q7q8q9, { kind: "email" as const }, ...q10q11];
   }, []);
 
   const [slideIndex, setSlideIndex] = useState(0);
@@ -124,6 +126,7 @@ export default function Quiz() {
       const turnstileSatisfied = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? Boolean(turnstileToken) : true;
       return firstName.trim().length > 0 && /\S+@\S+\.\S+/.test(email) && consent && turnstileSatisfied;
     }
+    if (slide.kind === "transition") return true;
     if (slide.kind === "question") {
       const field = FOLLOWUP_FIELD[slide.question.id];
       const value = followup[field];
@@ -132,7 +135,7 @@ export default function Quiz() {
     }
     switch (slide.scene) {
       case 0:
-        return story.wound !== "";
+        return story.wound.length > 0;
       case 1:
         return story.woundCost.trim().length > 0 && story.standVirtue !== "";
       case 2:
@@ -227,6 +230,12 @@ export default function Quiz() {
         <StoryScene scene={slide.scene} story={story} setStory={setStory} />
       )}
 
+      {slide.kind === "transition" && (
+        <div>
+          <p className="text-lg leading-relaxed text-dark-gray">{TRANSITION_MESSAGE}</p>
+        </div>
+      )}
+
       {slide.kind === "question" && (
         <FollowupQuestion question={slide.question} followup={followup} setFollowup={setFollowup} />
       )}
@@ -290,17 +299,25 @@ function StoryScene({
   setStory: React.Dispatch<React.SetStateAction<StoryAnswers>>;
 }) {
   if (scene === 0) {
+    const maxWounds = 2;
     return (
       <div>
         <h1 className="font-lora text-2xl text-soil md:text-3xl">Winter</h1>
         <SceneText body={STORY_SCENES.winterWall.body} prompt={STORY_SCENES.winterWall.prompt} />
+        <p className="mt-1 text-sm italic text-bark">{STORY_SCENES.winterWall.helper}</p>
         <div className="mt-4 space-y-3">
           {WOUND_OPTIONS.map((w) => (
             <OptionButton
               key={w}
               label={w}
-              selected={story.wound === w}
-              onClick={() => setStory((s) => ({ ...s, wound: w }))}
+              selected={story.wound.includes(w)}
+              onClick={() =>
+                setStory((s) => {
+                  if (s.wound.includes(w)) return { ...s, wound: s.wound.filter((x) => x !== w) };
+                  if (s.wound.length >= maxWounds) return s;
+                  return { ...s, wound: [...s.wound, w] };
+                })
+              }
             />
           ))}
         </div>
@@ -317,11 +334,13 @@ function StoryScene({
   }
 
   if (scene === 1) {
+    const woundList = story.wound.join(" and ");
     return (
       <div>
         <h1 className="font-lora text-2xl text-soil md:text-3xl">Winter</h1>
         <p className="mt-3 text-lg text-dark-gray">
-          You named <strong>&ldquo;{story.wound}&rdquo;</strong> as the word carved deepest.
+          You named <strong>&ldquo;{woundList}&rdquo;</strong> as the word{story.wound.length > 1 ? "s" : ""} carved
+          deepest{story.otherWords ? <>, and wrote: &ldquo;{story.otherWords}&rdquo;</> : ""}.
         </p>
         <p className="mt-4 font-lora text-xl text-soil">{STORY_SCENES.winterStand.woundCostPrompt}</p>
         <textarea
@@ -437,7 +456,7 @@ function StoryScene({
       <div className="mt-4 rounded-lg border border-mid-gray bg-linen p-4">
         <p className="text-sm font-medium text-bark">What your coach reads before your first session</p>
         <p className="mt-1 text-dark-gray">
-          Wound: <strong>{story.wound}</strong>
+          Wound: <strong>{story.wound.join(", ")}</strong>
           {story.otherWords && <> · Other words: {story.otherWords}</>}
         </p>
         <p className="mt-1 text-dark-gray">Cost: {story.woundCost}</p>

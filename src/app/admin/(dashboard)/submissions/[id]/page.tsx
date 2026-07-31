@@ -49,7 +49,7 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
         </a>
       </div>
 
-      {submission.wound ? (
+      {submission.wound?.length > 0 ? (
         <>
           {/* Story-flow submission */}
           <div className="rounded-lg border border-mid-gray bg-off-white p-6">
@@ -65,7 +65,7 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
             <div className="rounded-lg border border-mid-gray bg-off-white p-6">
               <h2 className="font-lora text-lg text-soil">Story signals</h2>
               <dl className="mt-3 space-y-2 text-sm">
-                <AnswerRow label="Wound word" value={submission.wound} />
+                <AnswerRow label="Wound word(s)" value={submission.wound.join(", ")} />
                 <AnswerRow label="Instinct" value={submission.instinct_text || submission.instinct_type} />
                 <AnswerRow label="Wound / instinct agree" value={submission.flag_for_review ? "No — flagged" : "Yes"} />
               </dl>

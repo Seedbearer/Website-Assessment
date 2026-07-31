@@ -2,7 +2,7 @@ import type { SeedType } from "./assessment-data";
 import { WOUND_TO_TYPE, type WoundValue } from "./story-assessment-data";
 
 export type StoryAnswers = {
-  wound: WoundValue;
+  wound: WoundValue[];
   otherWords: string;
   woundCost: string;
   instinctType: SeedType;
@@ -61,11 +61,12 @@ function checkUrgent(...texts: string[]): boolean {
 }
 
 export function calculateSeedType(answers: StoryAnswers): ScoringResult {
-  const woundType = WOUND_TO_TYPE[answers.wound];
+  const woundTypes = answers.wound.map((w) => WOUND_TO_TYPE[w]);
   const instinctType = answers.instinctType;
 
   const seedType = instinctType;
-  const woundConfirms = woundType === instinctType;
+  // Confirmed if any selected wound-word maps to the same type as the instinct choice.
+  const woundConfirms = woundTypes.includes(instinctType);
 
   const textMatches = matchesText(answers.otherWords, seedType) || matchesText(answers.closingText, seedType);
   const flagForReview = !woundConfirms;

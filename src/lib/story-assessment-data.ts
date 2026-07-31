@@ -72,33 +72,33 @@ export const VIRTUE_INFO: Record<StandVirtue | ReachVirtue | GardenVirtue | Walk
   Beauty: { name: "Beauty", description: "Something that lovely is worth walking toward." },
 };
 
-// Narrative copy for each scene — kept verbatim from the approved prototype. The softened line in
-// Thaw ("something stirs...") deliberately avoids a direct scripture citation — don't revert it.
+// Narrative copy for each scene.
 export const STORY_SCENES = {
   winterWall: {
     body: "You wake at the bottom of a well. The walls are close, covered in old words — carved deep in some places, scratched thin and half-legible in others, layered over each other the way things get written when they're written more than once. Some of it you don't recognize. Some of it you know by heart, because you're the one who put it there, one bad year at a time.",
-    prompt: "Which one is carved deepest?",
+    prompt: "Which ones are carved deepest?",
+    helper: "Choose up to two.",
     otherWordsPrompt: "Are there other words scratched into this wall — ones only you would recognize?",
   },
   winterStand: {
     woundCostPrompt: "When has that cost you the most?",
-    body: "Something moves through the dark before your mind catches up — something stirs, and you begin to get a sense of the light. Your legs remember, faintly, how to hold you.",
+    body: "You are lying on the ground, dazed but beginning to become alert to a sense of light that is waking you up. You begin to feel a sense of internal warmth and strength, as if waking up to a different reality.",
     prompt: "What gets you to your feet?",
   },
   thaw: {
-    body: "Standing now, you're not alone down here. Someone else is still on the ground beside you. The walls stop shouting so loud once you're upright — there's room to notice who else is in the dark with you.\n\nYou reach down.",
-    prompt: "What moves you to reach for them?",
+    body: "As you stand, you begin to shake the cobwebs from your head and realize someone is there with you. Someone you care about is still lying on the ground beside you. They haven't woken up yet.\n\nYou reach down.",
+    prompt: "What moves you to reach out for them?",
   },
   springInstinct: {
-    body: "You climb out. The ground stretches bare and cracked in every direction. Before you even see anything worth doing, your hands already know what they want to do.",
+    body: "After waking the other person up you make the hard climb out. You stand to your feet, squinting into the daylight. The ground is cracked, dry and broken. Before you see anything worth doing, your hands already seem like they know what they want to do.",
     prompt: "Without thinking, what do your hands want to do?",
   },
   springGarden: {
-    body: "Then you see it — off toward the tree line, one square of ground that shouldn't be able to hold anything living, and does. Vines heavy enough to bend the trellis they climb. Leaves broad as a hand, unbothered by the cracked dirt just past their border. Rows too straight and too green to have grown there on their own — someone has been tending this a long time.\n\nA woman is on her knees in the middle of it, hands in the soil, singing while she works — not performing the song, just working and singing as though they're the same motion for her. Fruit hangs low enough to reach without stretching. The air smells like something ready, not something rotting.\n\nYou don't recognize the tune. You recognize what it's doing to you — something in you that had quietly given up on flourishing being possible is starting to remember otherwise.",
+    body: "Then you see it — off toward the tree line, one square of ground that shouldn't be able to hold anything living, and does. Vines heavy enough to bend the trellis they climb. Leaves broad as a hand, unbothered by the cracked dirt just past their border. Rows too straight and too green to have grown there on their own — someone has been tending this a long time.\n\nA woman is on her knees in the middle of it, hands in the soil, singing while she works — not performing the song, just working and singing as though they're the same motion for her. Fruit hangs low enough to reach without stretching. The air smells like something ready, not something rotting.\n\nYou don't recognize the tune, but it is penetrating your soul, deep into your bones. There is a resonant pulse of light and life in the song — it is awakening a sense of life that has been sleeping inside of you.",
     prompt: "What draws your attention toward it?",
   },
   summer: {
-    body: "You start walking. The bare ground doesn't change right away — but you do. The song gets louder, or maybe you're just listening better.\n\nThe garden is still a long way off.",
+    body: "You follow the call of the song, you start taking the journey towards it, towards the garden, the gardener and the life you sense there.\n\nIt is a long way off.",
     prompt: "What keeps you walking?",
   },
   close: {
@@ -107,3 +107,8 @@ export const STORY_SCENES = {
     closingPrompt: "What do you want to carry out of this story, into your family?",
   },
 };
+
+// Shown once, between the end of the story and the reinstated soil/season questions — makes the
+// tonal shift from narrative to direct questions explicit rather than letting it happen silently.
+export const TRANSITION_MESSAGE =
+  "We are moving to the portion of the assessment where we try to understand your current situation.";
