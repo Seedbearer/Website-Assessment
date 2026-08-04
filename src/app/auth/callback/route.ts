@@ -16,5 +16,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/admin/login?error=auth_failed`);
+  const loginPath = next.startsWith("/admin") ? "/admin/login" : "/login";
+  return NextResponse.redirect(`${origin}${loginPath}?error=auth_failed`);
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase-browser";
+import GoogleIcon from "@/components/ui/GoogleIcon";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -29,6 +30,16 @@ export default function AdminLoginPage() {
     setStatus("sent");
   }
 
+  async function handleGoogleSignIn() {
+    const supabase = createSupabaseBrowserClient();
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=/admin/dashboard`,
+      },
+    });
+  }
+
   return (
     <section className="flex min-h-[70vh] items-center justify-center bg-linen px-4">
       <div className="w-full max-w-sm rounded-lg border border-mid-gray bg-off-white p-8">
@@ -42,24 +53,41 @@ export default function AdminLoginPage() {
             Check <strong>{email}</strong> for a sign-in link.
           </p>
         ) : (
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@seedbearerfamily.com"
-              className="w-full rounded-lg border border-mid-gray bg-linen p-3 text-dark-gray focus:border-deep-green focus:outline-none"
-            />
-            {error && <p className="text-sm text-amber">{error}</p>}
+          <>
             <button
-              type="submit"
-              disabled={status === "sending"}
-              className="w-full rounded bg-deep-green px-6 py-3 font-medium text-linen transition hover:opacity-90 disabled:opacity-50"
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded border border-mid-gray bg-linen px-6 py-3 font-medium text-dark-gray transition hover:bg-mid-gray"
             >
-              {status === "sending" ? "Sending…" : "Send sign-in link"}
+              <GoogleIcon />
+              Continue with Google
             </button>
-          </form>
+
+            <div className="my-4 flex items-center gap-3 text-xs text-bark">
+              <div className="h-px flex-1 bg-mid-gray" />
+              or
+              <div className="h-px flex-1 bg-mid-gray" />
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@seedbearerfamily.com"
+                className="w-full rounded-lg border border-mid-gray bg-linen p-3 text-dark-gray focus:border-deep-green focus:outline-none"
+              />
+              {error && <p className="text-sm text-amber">{error}</p>}
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full rounded bg-deep-green px-6 py-3 font-medium text-linen transition hover:opacity-90 disabled:opacity-50"
+              >
+                {status === "sending" ? "Sending…" : "Send sign-in link"}
+              </button>
+            </form>
+          </>
         )}
       </div>
     </section>
