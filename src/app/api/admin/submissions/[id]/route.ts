@@ -35,3 +35,28 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
   return NextResponse.json({ ok: true });
 }
+
+export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+  if (!(await isAuthorizedAdmin())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const supabase = getSupabaseAdmin();
+
+  // No ON DELETE CASCADE on these FKs (see 0001_init.sql), so dependent rows must go first.
+  for (const table of ["knowledge_base", "coaching_notes", "personal_values", "family_members"] as const) {
+    const { error } = await supabase.from(table).delete().eq("submission_id", params.id);
+    if (error) {
+      console.error(`admin/submissions DELETE failed clearing ${table}`, error);
+      return NextResponse.json({ error: "Delete failed." }, { status: 500 });
+    }
+  }
+
+  const { error } = await supabase.from("submissions").delete().eq("id", params.id);
+  if (error) {
+    console.error("admin/submissions DELETE failed", error);
+    return NextResponse.json({ error: "Delete failed." }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}

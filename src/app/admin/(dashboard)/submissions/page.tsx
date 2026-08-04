@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import SubmissionFilterSelects from "@/components/admin/SubmissionFilterSelects";
+import DeleteSubmissionButton from "@/components/admin/DeleteSubmissionButton";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,7 @@ export default async function SubmissionsListPage({
               <th className="px-4 py-3 font-medium">Season</th>
               <th className="px-4 py-3 font-medium">Date</th>
               <th className="px-4 py-3 font-medium">Status</th>
+              <th className="px-4 py-3 font-medium"></th>
             </tr>
           </thead>
           <tbody>
@@ -85,11 +87,14 @@ export default async function SubmissionsListPage({
                     </span>
                   </div>
                 </td>
+                <td className="px-4 py-3 text-right">
+                  <DeleteSubmissionButton submissionId={row.id} submissionName={row.first_name} compact />
+                </td>
               </tr>
             ))}
             {(submissions ?? []).length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-dark-gray">
+                <td colSpan={7} className="px-4 py-6 text-center text-dark-gray">
                   No submissions match this filter.
                 </td>
               </tr>

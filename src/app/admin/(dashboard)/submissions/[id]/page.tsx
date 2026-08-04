@@ -6,6 +6,7 @@ import ResponseTracking from "@/components/admin/ResponseTracking";
 import PersonalValuesEditor from "@/components/admin/PersonalValuesEditor";
 import CoachingNotes from "@/components/admin/CoachingNotes";
 import KnowledgeBaseForm from "@/components/admin/KnowledgeBaseForm";
+import DeleteSubmissionButton from "@/components/admin/DeleteSubmissionButton";
 
 export const dynamic = "force-dynamic";
 
@@ -41,12 +42,19 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
             <p className="font-lora text-xl text-soil">{submission.seed_type_algorithm}</p>
           </div>
         </div>
-        <a
-          href={`mailto:${submission.email}`}
-          className="mt-4 inline-block rounded bg-soil px-4 py-2 text-sm font-medium text-linen transition hover:bg-bark"
-        >
-          Reply via email →
-        </a>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <a
+            href={`mailto:${submission.email}`}
+            className="inline-block rounded bg-soil px-4 py-2 text-sm font-medium text-linen transition hover:bg-bark"
+          >
+            Reply via email →
+          </a>
+          <DeleteSubmissionButton
+            submissionId={submission.id}
+            submissionName={submission.first_name}
+            redirectTo="/admin/submissions"
+          />
+        </div>
       </div>
 
       {submission.wound?.length > 0 ? (
