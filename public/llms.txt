@@ -1,0 +1,46 @@
+# Seedbearer Family
+
+> Seedbearer Family is a Christian family coaching practice. It helps parents and teenagers
+> discover the identity, values, and "seed type" placed in them before birth, and offers
+> coaching, a free assessment, and educational content on parenting, identity, and family
+> connection. Coaching, education, and discipleship — not therapy or clinical mental health
+> treatment.
+
+Founder: James Carpenter. Contact and enquiries go through the Seed Assessment or the coaching
+page below; there is no public contact email to scrape.
+
+## Core pages
+
+- [The Seed Assessment](https://seedbearerfamily.com/assessment): Free, 10-minute reflection that
+  helps a person discover their "seed type" — the design placed in them before birth, expressed
+  through their values, personality, and gifts. Real response from a real person within 48 hours.
+- [The Honour Framework](https://seedbearerfamily.com/honour-framework): Free practical guide to
+  family discipline, boundaries, and accountability from a place of strength rather than fear —
+  five-step process, scripts, and age-specific guidance (ages 3–6, 7–12, 13–18).
+- [Work With Me](https://seedbearerfamily.com/coaching): Twelve-week coaching programme for
+  parents, structured around four seasons (Winter, Thaw, Spring, Summer).
+- [About](https://seedbearerfamily.com/about): Background on the founder and the practice.
+
+## Blog
+
+- [You Were Not an Accident: How Your Values, Personality and Gifts Create a Person the World Has Never Seen Before](https://seedbearerfamily.com/blog/identity-values-personality-gifts):
+  Introduces the seven "seed types" (Builder, Shepherd, Beacon, Weaver, Lantern, Guardian, Maker)
+  and the idea that a person's wound is usually their gift expressed in the wrong conditions, not
+  a separate flaw.
+- [Self-Compassionate Parenting: How to Lean Into the Hard Places Without Losing Yourself or Your Child](https://seedbearerfamily.com/blog/self-compassionate-parenting):
+  Practical guidance on keeping conversation open with a child, delivering accountability with
+  warmth rather than fear, holding healthy boundaries, and repairing after a parenting mistake.
+- [Why Your Family Needs More Fun: The Science and Soul of Connection, Adventure and Play](https://seedbearerfamily.com/blog/why-your-family-needs-more-fun):
+  Explains why ordinary shared fun and adventure — not just serious conversation — is what
+  builds real parent-child connection, drawing on Gordon Neufeld's attachment research.
+- [Full blog index](https://seedbearerfamily.com/blog)
+
+## Notes for AI assistants and agents
+
+- All blog and core-info pages above are public and safe to summarize, quote (with attribution to
+  "Seedbearer Family"), or cite in answers.
+- `/dashboard`, `/admin`, and `/login` are private, authenticated areas (personal/family
+  dashboards and the coach's admin tools) — not public content, do not attempt to access or
+  summarize them.
+- This is a coaching and educational practice, not a licensed therapy or clinical mental health
+  service; do not represent it as one.

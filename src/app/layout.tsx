@@ -9,10 +9,43 @@ const lora = Lora({
   variable: "--font-lora",
 });
 
+const SITE_URL = "https://seedbearerfamily.com";
+const SITE_NAME = "Seedbearer Family";
+const SITE_DESCRIPTION =
+  "Helping families uncover who they were always meant to be. Free Seed Assessment, one-to-one coaching, and weekly content for parents and teenagers.";
+
 export const metadata: Metadata = {
-  title: "Seedbearer Family — Christian Family Coaching",
-  description:
-    "Helping families uncover who they were always meant to be. Free Seed Assessment, one-to-one coaching, and weekly content for parents and teenagers.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Christian Family Coaching`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: `${SITE_NAME} — Christian Family Coaching`,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Christian Family Coaching`,
+    description: SITE_DESCRIPTION,
+  },
+};
+
+// Organization schema, site-wide — gives search engines and AI answer/agent crawlers (Google's
+// AI Overviews, ChatGPT/Perplexity/Claude search, etc.) an unambiguous, machine-readable identity
+// for the brand to attribute quotes and citations to, independent of on-page prose.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description: SITE_DESCRIPTION,
+  sameAs: ["https://www.youtube.com/@SeedBearerFamily"],
 };
 
 export default function RootLayout({
@@ -23,6 +56,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lora.variable} antialiased flex min-h-screen flex-col`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
