@@ -1,19 +1,41 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
+import { getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import Button from "@/components/ui/Button";
 
-export function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
-}
+// Rendered per-request rather than statically generated at build time — required for the
+// date-based publish gating in lib/blog.ts to actually take effect on the day a post's date
+// arrives, since nothing here triggers a rebuild on a schedule.
+export const dynamic = "force-dynamic";
+
+const SITE_URL = "https://seedbearerfamily.com";
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = getPostBySlug(params.slug);
   if (!post) return {};
+
+  const title = post.seo_title || post.title;
+  const description = post.seo_description || post.excerpt;
+  const url = `${SITE_URL}/blog/${post.slug}`;
+
   return {
-    title: `${post.seo_title || post.title} — Seedbearer Family`,
-    description: post.seo_description || post.excerpt,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title,
+      description,
+      url,
+      publishedTime: post.date,
+      section: post.category,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -22,9 +44,31 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   const related = getRelatedPosts(post);
+  const url = `${SITE_URL}/blog/${post.slug}`;
+
+  // Article schema per post — lets search engines and AI answer/agent crawlers (Google AI
+  // Overviews, ChatGPT/Perplexity/Claude search) parse author, date, and topic without having
+  // to infer them from prose, and makes the post eligible for rich results.
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.seo_description || post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    articleSection: post.category,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Organization", name: "Seedbearer Family", url: SITE_URL },
+    publisher: { "@type": "Organization", name: "Seedbearer Family", url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.svg` } },
+  };
 
   return (
     <article className="bg-linen px-4 py-16 md:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="mx-auto max-w-3xl">
         {post.youtube_id && (
           <div className="aspect-video overflow-hidden rounded-lg">

@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { getAllPosts, type PostCategory } from "@/lib/blog";
 
+// Rendered per-request so scheduled (future-dated) posts appear on their date without needing a
+// rebuild — see the note in lib/blog.ts.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Blog — Seedbearer Family",
+  description:
+    "Articles on identity, parenting, healing, and family connection from Seedbearer Family — practical, faith-rooted guidance for parents and teenagers.",
+  alternates: { canonical: "https://seedbearerfamily.com/blog" },
 };
 
 const CATEGORIES: PostCategory[] = ["Identity", "Parenting", "Healing", "Connection"];
