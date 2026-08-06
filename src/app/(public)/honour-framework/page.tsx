@@ -2,7 +2,7 @@ import Link from "next/link";
 import AgeGuidance from "@/components/honour-framework/AgeGuidance";
 
 export const metadata = {
-  title: "The Honour Framework — Seedbearer Family",
+  title: "The Honour Framework",
   description:
     "A practical guide for families on discipline, boundaries, and accountability — from a place of strength rather than fear. Free resource from Seedbearer Family.",
 };

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Work With Me — Seedbearer Family",
+  title: "Work With Me",
   description: "A twelve-week program for parents ready to become who they were always meant to be.",
 };
 

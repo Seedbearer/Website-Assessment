@@ -1,7 +1,7 @@
 import Quiz from "@/components/assessment/Quiz";
 
 export const metadata = {
-  title: "The Seed Assessment — Seedbearer Family",
+  title: "The Seed Assessment",
 };
 
 export default function AssessmentQuizPage() {

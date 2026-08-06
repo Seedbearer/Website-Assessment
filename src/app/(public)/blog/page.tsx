@@ -6,7 +6,7 @@ import { getAllPosts, type PostCategory } from "@/lib/blog";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Blog — Seedbearer Family",
+  title: "Blog",
   description:
     "Articles on identity, parenting, healing, and family connection from Seedbearer Family — practical, faith-rooted guidance for parents and teenagers.",
   alternates: { canonical: "https://seedbearerfamily.com/blog" },

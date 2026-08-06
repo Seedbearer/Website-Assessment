@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Recommended Reading — Seedbearer Family",
+  title: "Recommended Reading",
 };
 
 export default function ReadingPage() {

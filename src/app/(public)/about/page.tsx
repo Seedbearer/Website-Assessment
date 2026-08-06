@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 
 export const metadata = {
-  title: "'My Story' — Seedbearer Family",
+  title: "My Story",
   description:
     "How a vision in 1999 led to 25 years of work with youth and families — and what Seedbearer Family Coaching is building toward.",
 };
@@ -23,8 +24,13 @@ export default function AboutPage() {
       <section className="bg-off-white px-4 py-20 md:px-8">
         <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-5 md:items-center">
           <div className="md:col-span-2">
-            {/* TODO: replace with the client's actual photo */}
-            <div className="aspect-square w-full rounded-lg border border-mid-gray bg-linen" />
+            <Image
+              src="/james-headshot.png"
+              alt="James, founder of Seedbearer Family"
+              width={800}
+              height={800}
+              className="aspect-square w-full rounded-lg border border-mid-gray object-cover"
+            />
           </div>
           <div className="space-y-5 text-lg leading-relaxed text-dark-gray md:col-span-3">
             <p>
