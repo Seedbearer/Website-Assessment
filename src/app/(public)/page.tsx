@@ -7,7 +7,7 @@ export default function HomePage() {
       <section className="bg-linen px-4 py-20 md:px-8">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <p className="text-sm font-semibold uppercase tracking-[3px] text-bark">
-            Christian Family Coaching
+            Family Coaching
           </p>
           <h1 className="mt-4 font-lora text-3xl font-normal text-soil md:text-5xl">
             Who do you think you are?
