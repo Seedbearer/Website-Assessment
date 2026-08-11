@@ -99,7 +99,7 @@ export async function notifyTriageCompleted(params: {
 
 // The family-facing email — "we'll send your results and a matched resource directly to your
 // inbox." Sent to the person who filled out the triage form, not the coach. A failure here must
-// not fail the submission (the on-screen thank-you page already gave them the Honour Framework
+// not fail the submission (the on-screen thank-you page already gave them the Conversation Framework
 // link directly), but it should still be awaited — see the Netlify fire-and-forget gotcha on
 // notifyAssessmentCompleted above; the same platform behavior applies here.
 export async function sendTriageResourceEmail(params: { firstName: string; email: string; category: TriageCategory; siteUrl: string }) {

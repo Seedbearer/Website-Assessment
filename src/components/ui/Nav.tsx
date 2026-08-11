@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { href: "/assessment", label: "Assessment" },
   { href: "/reading", label: "Reading" },
   { href: "/coaching", label: "Coaching" },
-  { href: "/honour-framework", label: "Honour Framework" },
+  { href: "/conversation-framework", label: "Conversation Framework" },
   { href: "/blog", label: "Blog" },
 ];
 

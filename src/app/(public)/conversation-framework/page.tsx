@@ -1,8 +1,8 @@
 import Link from "next/link";
-import AgeGuidance from "@/components/honour-framework/AgeGuidance";
+import AgeGuidance from "@/components/conversation-framework/AgeGuidance";
 
 export const metadata = {
-  title: "The Honour Framework",
+  title: "The Conversation Framework",
   description:
     "A practical guide for families on discipline, boundaries, and accountability — from a place of strength rather than fear. Free resource from Seedbearer Family.",
 };
@@ -108,7 +108,7 @@ const HARD_MOMENTS = [
   },
 ];
 
-export default function HonourFrameworkPage() {
+export default function ConversationFrameworkPage() {
   return (
     <>
       {/* Hero */}
@@ -118,7 +118,7 @@ export default function HonourFrameworkPage() {
             Free Family Resource
           </p>
           <h1 className="mt-4 font-lora text-3xl font-normal text-linen md:text-5xl">
-            The Honour Framework
+            The Conversation Framework
           </h1>
           <p className="mx-auto mt-5 max-w-xl italic text-straw md:text-lg">
             A practical guide for discipline, boundaries, and accountability — from a place of
@@ -322,24 +322,84 @@ export default function HonourFrameworkPage() {
         </p>
       </section>
 
-      {/* CTA */}
+      {/* Dual CTA — two doors */}
       <section className="bg-soil px-4 py-20 text-center md:px-8">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="font-lora text-3xl font-normal text-linen">Want to go deeper?</h2>
+        <div className="mx-auto max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-straw">
+            Two ways to go further
+          </p>
+          <h2 className="mt-3 font-lora text-3xl font-normal text-linen">Where do you want to start?</h2>
           <p className="mx-auto mt-4 max-w-xl text-straw">
-            The Seedbearer Family Coaching Programme walks you through the full Honour Framework
-            with scripts, role-play practice, and a coach alongside you — applying it in real
-            situations with your real family.
+            There are two doors into Seedbearer Family. One meets you where you are right now. The
+            other helps you discover who you were always meant to be. Both matter. You choose which
+            one comes first.
+          </p>
+
+          <div className="mt-10 grid gap-5 text-left sm:grid-cols-2">
+            <div className="rounded-lg border border-straw bg-linen/[0.07] p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-straw">
+                Something is hard right now
+              </p>
+              <h3 className="mt-3 font-lora text-xl font-normal text-linen">
+                Tell us what&rsquo;s happening in your family
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-straw">
+                Six questions. Three minutes. A matched resource waiting on the other side — and a
+                personal response within 48 hours.
+              </p>
+              <Link
+                href="/triage"
+                className="mt-6 inline-block rounded bg-deep-green px-7 py-3 text-sm font-medium text-linen transition hover:opacity-90"
+              >
+                Start the Family Triage →
+              </Link>
+            </div>
+
+            <div className="rounded-lg border border-straw bg-linen/[0.07] p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-straw">
+                I want to understand who we are
+              </p>
+              <h3 className="mt-3 font-lora text-xl font-normal text-linen">Discover your unique design</h3>
+              <p className="mt-3 text-sm leading-relaxed text-straw">
+                The Seed Assessment identifies your unique design — your values, your seed type,
+                your season. Free, ten minutes, personal response.
+              </p>
+              <Link
+                href="/assessment"
+                className="mt-6 inline-block rounded border border-linen px-7 py-3 text-sm font-medium text-linen transition hover:bg-linen hover:text-soil"
+              >
+                Take the Seed Assessment →
+              </Link>
+            </div>
+          </div>
+
+          <p className="mx-auto mt-8 max-w-xl text-sm text-straw opacity-75">
+            Not sure which one? If something is urgent right now, start with the Triage. If life is
+            generally okay and you want to understand yourself and your child more deeply, start
+            with the Seed Assessment. Either way, you&rsquo;ll hear from us personally.
+          </p>
+        </div>
+      </section>
+
+      {/* Coaching upgrade */}
+      <section className="bg-off-white px-4 py-14 text-center md:px-8">
+        <div className="mx-auto max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-bark">
+            Want the full depth?
+          </p>
+          <p className="mt-3 font-lora text-xl font-normal text-soil">
+            The Seedbearer Family Coaching Programme walks you through the full Conversation
+            Framework — with scripts, role-play practice, and a coach alongside you.
+          </p>
+          <p className="mt-3 text-sm text-bark">
+            Applying it in real situations with your real family. Not a template — a coach.
           </p>
           <Link
-            href="/assessment"
-            className="mt-8 inline-block rounded bg-deep-green px-10 py-4 font-medium text-linen transition hover:opacity-90"
+            href="/coaching"
+            className="mt-6 inline-block rounded bg-soil px-7 py-3 text-sm font-medium text-linen transition hover:bg-bark"
           >
-            Take the Free Seed Assessment
+            Learn about coaching →
           </Link>
-          <p className="mt-4 text-sm text-straw opacity-70">
-            Free · 10 minutes · Personal response within 48 hours
-          </p>
         </div>
       </section>
     </>

@@ -159,12 +159,12 @@ export default function TriageForm() {
         <div className="mt-6 rounded-lg bg-soil p-6 text-linen">
           <p className="font-lora text-lg">While you wait</p>
           <p className="mt-2 text-straw">
-            If there&rsquo;s a difficult moment happening in your family right now, the Honour Framework
+            If there&rsquo;s a difficult moment happening in your family right now, the Conversation Framework
             is the most practical immediate tool we have. It&rsquo;s free, it&rsquo;s live, and you can use
             Step 1 tonight.
           </p>
-          <Link href="/honour-framework" className="mt-4 inline-block rounded bg-linen px-6 py-3 font-medium text-soil">
-            Read the Honour Framework →
+          <Link href="/conversation-framework" className="mt-4 inline-block rounded bg-linen px-6 py-3 font-medium text-soil">
+            Read the Conversation Framework →
           </Link>
         </div>
 

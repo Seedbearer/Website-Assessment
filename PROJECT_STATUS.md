@@ -151,12 +151,19 @@ an explicit user decision, not something to reconsider without asking again.
   time by `src/lib/reading-list.ts` — updating the list is just replacing that CSV and redeploying,
   no code changes. No Amazon affiliate links yet (intentional, added once there's traffic); the
   FTC disclosure line only renders once at least one book has a link.
-- **`/honour-framework`** — built 2026-07-31 from client-supplied HTML content (five-step
-  discipline framework, accountability conversation, age-specific tabs, hard-moments guidance).
+- **`/conversation-framework`** — built 2026-07-31 as `/honour-framework` from client-supplied HTML
+  content (five-step discipline framework, accountability conversation, age-specific tabs,
+  hard-moments guidance), **renamed 2026-08-11** to "The Conversation Framework" (client decision —
+  every "Honour Framework" reference across the site was updated: this page, nav, triage matched
+  responses/emails, blog cross-links, `llms.txt`, `content/reading-list.csv`). `/honour-framework`
+  308-redirects to the new path (`next.config.mjs`) so old links/bookmarks/sent emails don't 404.
   Rebuilt as React/Tailwind matching the site's design system rather than using the raw HTML/CSS
-  supplied. Page: `src/app/(public)/honour-framework/page.tsx`; interactive age tabs extracted to
-  `src/components/honour-framework/AgeGuidance.tsx` (client component, since `page.tsx` exports
-  `metadata` and can't itself be `"use client"`). Live and confirmed deployed.
+  supplied. Page: `src/app/(public)/conversation-framework/page.tsx`; interactive age tabs extracted
+  to `src/components/conversation-framework/AgeGuidance.tsx` (client component, since `page.tsx`
+  exports `metadata` and can't itself be `"use client"`). The rename also added two new bottom
+  sections present in the client's updated source doc: a two-door CTA ("Something is hard right
+  now" → `/triage`, "I want to understand who we are" → `/assessment`) and a coaching-upgrade CTA
+  → `/coaching`, replacing the old single "Want to go deeper?" CTA.
 - **Instagram link** — still a placeholder (`https://instagram.com`) in the footer, waiting on
   the real handle.
 - **About page photo** — done 2026-08-06, `public/james-headshot.png`, wired into

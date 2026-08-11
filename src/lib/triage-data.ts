@@ -101,24 +101,24 @@ export const MATCHED_RESPONSES: Record<TriageCategory, MatchedResponse> = {
     whatToKnow:
       "What you’re feeling is one of the most common and most painful experiences in family life — and it doesn’t mean you’ve failed. Disconnection happens gradually, usually through a series of small moments where the child learned it wasn’t safe to bring the real thing. The relationship is not broken. It is waiting. And connection, once genuinely rebuilt, goes deeper than it was before.",
     nextSteps: [
-      { label: "The Honour Framework", url: "/honour-framework", description: "Start here — read the section on keeping conversations open and the five-step process. This is your most practical immediate tool for beginning to reconnect." },
+      { label: "The Conversation Framework", url: "/conversation-framework", description: "Start here — read the section on keeping conversations open and the five-step process. This is your most practical immediate tool for beginning to reconnect." },
       { label: "Why Your Family Needs More Fun", url: "/blog/why-your-family-needs-more-fun", description: "Connection is rebuilt in ordinary moments, not big conversations — this reframe often changes everything." },
     ],
     takeThisFurther:
-      "Once you’ve had a chance to work through the Honour Framework, the natural next step is understanding the deeper pattern — why the disconnection happened and what both you and your child are designed to need. The Seed Assessment opens that conversation. Or book a free 30-minute discovery call and we’ll talk through your specific situation together.",
+      "Once you’ve had a chance to work through the Conversation Framework, the natural next step is understanding the deeper pattern — why the disconnection happened and what both you and your child are designed to need. The Seed Assessment opens that conversation. Or book a free 30-minute discovery call and we’ll talk through your specific situation together.",
   },
   Conflict: {
     category: "Conflict",
     emoji: "⚡",
     presentingLine: "“Everything is volatile. I’m exhausted and I don’t know what to do.”",
     whatToKnow:
-      "Ongoing conflict in a family is rarely about the thing it appears to be about. Beneath the arguments and defiance is almost always an unmet need — in your child, and often in you too. That doesn’t mean the behaviour is acceptable. It means the behaviour is communicating something that hasn’t found words yet. The Honour Framework gives you a practical, step-by-step process for responding to conflict from a place of strength rather than fear — and you can start using it tonight.",
+      "Ongoing conflict in a family is rarely about the thing it appears to be about. Beneath the arguments and defiance is almost always an unmet need — in your child, and often in you too. That doesn’t mean the behaviour is acceptable. It means the behaviour is communicating something that hasn’t found words yet. The Conversation Framework gives you a practical, step-by-step process for responding to conflict from a place of strength rather than fear — and you can start using it tonight.",
     nextSteps: [
-      { label: "The Honour Framework", url: "/honour-framework", description: "The Five Steps and the Accountability Conversation are built exactly for what you’re describing. Pay particular attention to Step 2 (separating the person from the behaviour), the Three Questions, and the “When It’s Hard” section." },
+      { label: "The Conversation Framework", url: "/conversation-framework", description: "The Five Steps and the Accountability Conversation are built exactly for what you’re describing. Pay particular attention to Step 2 (separating the person from the behaviour), the Three Questions, and the “When It’s Hard” section." },
       { label: "Self-Compassionate Parenting", url: "/blog/self-compassionate-parenting", description: "The section on accountability with warmth is directly relevant." },
     ],
     takeThisFurther:
-      "The Honour Framework gives you the immediate tools. When you’re ready to go deeper — to understand why your family keeps landing in the same conflict patterns and what both you and your child are actually designed for — the Seed Assessment is the next step. Or if the conflict feels too acute for a resource, book a free 30-minute discovery call and let’s talk directly.",
+      "The Conversation Framework gives you the immediate tools. When you’re ready to go deeper — to understand why your family keeps landing in the same conflict patterns and what both you and your child are actually designed for — the Seed Assessment is the next step. Or if the conflict feels too acute for a resource, book a free 30-minute discovery call and let’s talk directly.",
   },
   Behaviour: {
     category: "Behaviour",
@@ -127,7 +127,7 @@ export const MATCHED_RESPONSES: Record<TriageCategory, MatchedResponse> = {
     whatToKnow:
       "When a child’s behaviour is specific and concerning — lying, withdrawal, self-harm risk, substances, school refusal — the most important thing to know is this: the behaviour is a signal, not the problem. Something underneath it is asking for help in the only language currently available. That doesn’t mean the behaviour has no consequences. It means the consequences need to be held alongside genuine curiosity about what’s going on underneath.",
     nextSteps: [
-      { label: "The Honour Framework", url: "/honour-framework", description: "Particularly the scenarios section, which covers lying and repeated patterns." },
+      { label: "The Conversation Framework", url: "/conversation-framework", description: "Particularly the scenarios section, which covers lying and repeated patterns." },
       { label: "Book a discovery call", url: "/coaching", description: "Some presenting behaviours need a direct conversation before a resource. If what’s happening involves risk to your child’s safety, a call is the right first step." },
     ],
     takeThisFurther:
@@ -155,7 +155,7 @@ export const MATCHED_RESPONSES: Record<TriageCategory, MatchedResponse> = {
     whatToKnow:
       "When parents are not on the same page, children learn to navigate the gap between them — and that navigation is exhausting, destabilising, and teaches them that relationships don’t hold when things are hard. The disagreement itself is rarely about the specific issue on the surface. It is almost always about different wounds, different fears, and different experiences of how family is supposed to work. The most effective place to start is not a parenting strategy. It is an honest conversation between the two of you about what you each carry.",
     nextSteps: [
-      { label: "The Honour Framework", url: "/honour-framework", description: "The accountability conversation framework is directly applicable to the conversation you need to have with your partner." },
+      { label: "The Conversation Framework", url: "/conversation-framework", description: "The accountability conversation framework is directly applicable to the conversation you need to have with your partner." },
       { label: "Self-Compassionate Parenting", url: "/blog/self-compassionate-parenting", description: "The section on healthy boundaries." },
       { label: "Book a couples or co-parenting discovery call", url: "/coaching", description: "This situation benefits most from a direct conversation." },
     ],
@@ -185,7 +185,7 @@ export const MATCHED_RESPONSES: Record<TriageCategory, MatchedResponse> = {
       "Transitions — divorce, blended families, loss, a major move, a significant life change — shake the foundations of family identity. Who are we now? What holds us together? These are not small questions, and they don’t have quick answers. What matters most in a season of transition is not having the answers — it is maintaining connection through the uncertainty. Families who stay connected through transitions, even imperfectly, come out the other side knowing each other in a way they couldn’t have before.",
     nextSteps: [
       { label: "Why Your Family Needs More Fun", url: "/blog/why-your-family-needs-more-fun", description: "Connection in ordinary moments is the anchor during disruptive seasons." },
-      { label: "The Honour Framework", url: "/honour-framework", description: "The repair conversation is particularly relevant in seasons of transition." },
+      { label: "The Conversation Framework", url: "/conversation-framework", description: "The repair conversation is particularly relevant in seasons of transition." },
       { label: "Book a discovery call", url: "/coaching", description: "Transition seasons often need direct support rather than a resource." },
     ],
     takeThisFurther:
