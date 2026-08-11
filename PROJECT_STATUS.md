@@ -120,18 +120,45 @@ an explicit user decision, not something to reconsider without asking again.
   dev server needs restarting.
 
 ## Still outstanding / pending
-- **`/reading`** — placeholder, waiting on `Seedbearer_Carrd_Website_Guide.docx` (Section 4 book
-  list) — file not yet supplied.
+- **Family Triage Assessment (`/triage`)** — built 2026-08-07 from `Seedbearer_Triage_Assessment.docx`.
+  A separate, lighter "Door 1" entry point from the Seed Assessment ("Door 2") for families in
+  acute difficulty: 6 questions, Q1 routes to one of 7 categories server-side
+  (`src/lib/triage-data.ts`), each with a matched response (validation + immediate resource links
+  + CTA) shown on-screen and emailed to the family (`sendTriageResourceEmail` in `notify.ts`), plus
+  an internal notification email to the coach (`notifyTriageCompleted`). Priority flag (Q6 = "not
+  okay") and clinical-referral flag (Behaviour/Transition category + Q6 = "not okay") are computed
+  server-side and stored, annotated on the admin notification email — no admin UI for triage
+  submissions yet (deliberately deferred; the notification email is the only visibility for now).
+  The doc's own spec assumed Tally + Notion; built native to this stack (Next.js + Supabase)
+  instead, matching the Seed Assessment's existing patterns.
+  - **⚠ Requires a manual step before this works live**: migration `0005_triage_assessment.sql`
+    (new `triage_submissions` table) has **not** been run against the Supabase database yet — do
+    that in Supabase's SQL Editor before real submissions will save. Until then, submissions will
+    fail with a friendly "could not save" error (verified locally: the API route's DB-error
+    handling works correctly, this is expected until the migration runs).
+  - Homepage (`src/app/(public)/page.tsx`) now presents both doors explicitly — hero has two
+    `DoorCard`s ("Something's wrong right now" → `/triage`, "I want to understand who we are" →
+    `/assessment`), and the "Where would you like to start?" section at the bottom repeats both as
+    buttons. No nav link was added (chose homepage-only discovery over a nav entry).
+  - Verified locally: full 6-question flow, multi-select (Q3), validation gating, and the
+    email-capture step all work correctly in the browser. Could not verify the actual DB
+    insert/email-send path end-to-end — real Turnstile blocks scripted submission (correctly), and
+    the table doesn't exist yet regardless (see above).
+- **`/reading`** — built 2026-08-06 from `Seedbearer_Recommended_Reading.csv`, 31 books across 7
+  categories. Data-driven: `content/reading-list.csv` (committed, git-tracked) is parsed at render
+  time by `src/lib/reading-list.ts` — updating the list is just replacing that CSV and redeploying,
+  no code changes. No Amazon affiliate links yet (intentional, added once there's traffic); the
+  FTC disclosure line only renders once at least one book has a link.
 - **`/honour-framework`** — built 2026-07-31 from client-supplied HTML content (five-step
   discipline framework, accountability conversation, age-specific tabs, hard-moments guidance).
   Rebuilt as React/Tailwind matching the site's design system rather than using the raw HTML/CSS
   supplied. Page: `src/app/(public)/honour-framework/page.tsx`; interactive age tabs extracted to
   `src/components/honour-framework/AgeGuidance.tsx` (client component, since `page.tsx` exports
-  `metadata` and can't itself be `"use client"`). Verified locally in dev — content renders in
-  order and the age-tab switching works. Not yet deployed/pushed.
+  `metadata` and can't itself be `"use client"`). Live and confirmed deployed.
 - **Instagram link** — still a placeholder (`https://instagram.com`) in the footer, waiting on
   the real handle.
-- **About page photo** — placeholder, waiting on the client's actual photo.
+- **About page photo** — done 2026-08-06, `public/james-headshot.png`, wired into
+  `src/app/(public)/about/page.tsx` via `next/image`.
 - **Footer disclaimer wording** — currently a reasonable default; no reference doc ever specified
   exact wording, worth confirming with the user if it matters.
 - **Seed-type dashboard content** (`src/lib/seed-type-content.ts`) — placeholder practice/reflection
@@ -150,5 +177,6 @@ an explicit user decision, not something to reconsider without asking again.
 - Story assessment handoff spec: was supplied as a one-off doc, not stored in the repo — the
   actual current implementation is `story-assessment-data.ts` + `Quiz.tsx`, treat those as truth
 - Migrations: `supabase/migrations/*.sql` — run manually in Supabase's SQL Editor, not via CLI (no
-  `supabase` CLI link was ever set up for this project). All four (`0001`-`0004`) have been run
-  against the live database as of the last session.
+  `supabase` CLI link was ever set up for this project). `0001`-`0004` have been run against the
+  live database. **`0005_triage_assessment.sql` has NOT been run yet** — see the Triage Assessment
+  entry above.

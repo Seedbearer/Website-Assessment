@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "@/components/ui/Button";
 
 export default function HomePage() {
@@ -20,12 +21,25 @@ export default function HomePage() {
             simply waiting for the right soil and conditions to grow. Seedbearer Family walks
             alongside parents and teenagers as they discover who they were created to be.
           </p>
-          <div className="mt-8">
-            <Button href="/assessment">Take the Free Seed Assessment</Button>
+
+          <div className="mt-10 grid w-full gap-4 sm:grid-cols-2">
+            <DoorCard
+              heading="Something&rsquo;s wrong right now"
+              body="A hard moment, a conflict, a child who&rsquo;s pulled away. Six questions, then a matched resource sent straight to your inbox."
+              href="/triage"
+              cta="Get help now"
+            />
+            <DoorCard
+              heading="I want to understand who we are"
+              body="Take the Seed Assessment — ten minutes to discover the design placed in you and your family before birth."
+              href="/assessment"
+              cta="Take the Seed Assessment"
+            />
           </div>
+
           <a
             href="https://www.youtube.com/@SeedBearerFamily"
-            className="mt-4 text-sm text-bark hover:text-soil transition"
+            className="mt-6 text-sm text-bark hover:text-soil transition"
           >
             Watch the latest video on YouTube →
           </a>
@@ -62,16 +76,34 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <h2 className="font-lora text-2xl text-linen md:text-3xl">Where would you like to start?</h2>
           <p className="mt-4 max-w-lg text-lg leading-relaxed text-straw">
-            The Seed Assessment is the beginning of the conversation. Ten minutes. No sales pitch. A
-            real response from a real person within 48 hours.
+            However you got here, there&rsquo;s a place to begin. No sales pitch. A real response from
+            a real person within 48 hours.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Button href="/triage" variant="inverted">
+              Something&rsquo;s wrong right now →
+            </Button>
             <Button href="/assessment" variant="inverted">
-              Start the Free Seed Assessment
+              Start the Free Seed Assessment →
             </Button>
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+function DoorCard({ heading, body, href, cta }: { heading: string; body: string; href: string; cta: string }) {
+  return (
+    <div className="flex flex-col rounded-lg border border-mid-gray bg-off-white p-6 text-left">
+      <h3 className="font-lora text-xl text-soil">{heading}</h3>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-dark-gray">{body}</p>
+      <Link
+        href={href}
+        className="mt-4 inline-block rounded bg-deep-green px-5 py-2.5 text-center text-sm font-medium text-linen transition hover:opacity-90"
+      >
+        {cta}
+      </Link>
+    </div>
   );
 }
