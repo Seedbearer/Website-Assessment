@@ -127,15 +127,17 @@ an explicit user decision, not something to reconsider without asking again.
   + CTA) shown on-screen and emailed to the family (`sendTriageResourceEmail` in `notify.ts`), plus
   an internal notification email to the coach (`notifyTriageCompleted`). Priority flag (Q6 = "not
   okay") and clinical-referral flag (Behaviour/Transition category + Q6 = "not okay") are computed
-  server-side and stored, annotated on the admin notification email — no admin UI for triage
-  submissions yet (deliberately deferred; the notification email is the only visibility for now).
+  server-side and stored, annotated on the admin notification email. Migration
+  `0005_triage_assessment.sql` has been run against the live database and verified.
   The doc's own spec assumed Tally + Notion; built native to this stack (Next.js + Supabase)
   instead, matching the Seed Assessment's existing patterns.
-  - **⚠ Requires a manual step before this works live**: migration `0005_triage_assessment.sql`
-    (new `triage_submissions` table) has **not** been run against the Supabase database yet — do
-    that in Supabase's SQL Editor before real submissions will save. Until then, submissions will
-    fail with a friendly "could not save" error (verified locally: the API route's DB-error
-    handling works correctly, this is expected until the migration runs).
+  - **Admin UI added 2026-08-11** (was initially deferred, then requested): `/admin/triage` (list,
+    with filters for unresponded/priority/clinical referral) and `/admin/triage/[id]` (full detail —
+    contact info, all six answers translated from their stored letter codes back to readable text
+    via `labelFor()`, the matched response that was sent, mark-as-responded, delete). Also added to
+    the main `/admin/dashboard` homepage (stat count + recent-submissions table) and the admin nav.
+    `DeleteSubmissionButton` was generalized (`endpoint`/`confirmMessage` props) to work for both
+    submission types rather than duplicating it.
   - Homepage (`src/app/(public)/page.tsx`) now presents both doors explicitly — hero has two
     `DoorCard`s ("Something's wrong right now" → `/triage`, "I want to understand who we are" →
     `/assessment`), and the "Where would you like to start?" section at the bottom repeats both as

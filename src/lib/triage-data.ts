@@ -68,6 +68,13 @@ export function categoryForQ1(q1: string): TriageCategory {
   return Q1_OPTIONS.find((o) => o.value === q1)?.category ?? "Overwhelm";
 }
 
+// Looks up an option's display label by its stored letter code — used by the admin detail view to
+// show what a submission's raw q2_duration/q4_stress_response/etc. values actually mean.
+export function labelFor(options: { value: string; label: string }[], value: string | null | undefined): string {
+  if (!value) return "—";
+  return options.find((o) => o.value === value)?.label ?? value;
+}
+
 export function isPriority(q6: string): boolean {
   return q6 === NOT_OKAY;
 }

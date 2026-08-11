@@ -8,11 +8,16 @@ export default function DeleteSubmissionButton({
   submissionName,
   redirectTo,
   compact = false,
+  endpoint,
+  confirmMessage,
 }: {
   submissionId: string;
   submissionName: string;
   redirectTo?: string;
   compact?: boolean;
+  /** Defaults to the Seed Assessment's submissions endpoint. */
+  endpoint?: string;
+  confirmMessage?: string;
 }) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
@@ -20,14 +25,15 @@ export default function DeleteSubmissionButton({
   async function handleDelete() {
     if (
       !window.confirm(
-        `Delete ${submissionName}'s submission? This permanently removes their assessment answers, coaching notes, and personal values. This can't be undone.`
+        confirmMessage ??
+          `Delete ${submissionName}'s submission? This permanently removes their assessment answers, coaching notes, and personal values. This can't be undone.`
       )
     ) {
       return;
     }
 
     setDeleting(true);
-    const res = await fetch(`/api/admin/submissions/${submissionId}`, { method: "DELETE" });
+    const res = await fetch(endpoint ?? `/api/admin/submissions/${submissionId}`, { method: "DELETE" });
     setDeleting(false);
 
     if (!res.ok) {

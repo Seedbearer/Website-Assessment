@@ -15,35 +15,58 @@ type SubmissionRow = {
   flag_for_review: boolean;
 };
 
+type TriageRow = {
+  id: string;
+  first_name: string;
+  category: string;
+  created_at: string;
+  responded: boolean;
+  priority_flag: boolean;
+  clinical_referral_flag: boolean;
+};
+
 export default async function AdminDashboardPage() {
   const supabase = getSupabaseAdmin();
 
-  const [{ count: total }, { count: thisWeek }, { count: unresponded }, { count: flagged }, { data: priorityQueue }, { data: recent }, { data: families }] =
-    await Promise.all([
-      supabase.from("submissions").select("id", { count: "exact", head: true }),
-      supabase
-        .from("submissions")
-        .select("id", { count: "exact", head: true })
-        .gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
-      supabase.from("submissions").select("id", { count: "exact", head: true }).eq("responded", false),
-      supabase.from("submissions").select("id", { count: "exact", head: true }).eq("flag_for_review", true),
-      supabase
-        .from("submissions")
-        .select("id, first_name, seed_type_algorithm, seed_type_coach, q11_season, created_at, responded, priority_response, flag_for_review")
-        .or("priority_response.eq.true,responded.eq.false")
-        .order("created_at", { ascending: false })
-        .limit(20),
-      supabase
-        .from("submissions")
-        .select("id, first_name, seed_type_algorithm, seed_type_coach, q11_season, created_at, responded, priority_response, flag_for_review")
-        .order("created_at", { ascending: false })
-        .limit(10),
-      supabase
-        .from("families")
-        .select("family_code, family_name, created_at")
-        .order("created_at", { ascending: false })
-        .limit(10),
-    ]);
+  const [
+    { count: total },
+    { count: thisWeek },
+    { count: unresponded },
+    { count: flagged },
+    { data: priorityQueue },
+    { data: recent },
+    { data: families },
+    { count: triageTotal },
+    { count: triageUnresponded },
+    { data: recentTriage },
+  ] = await Promise.all([
+    supabase.from("submissions").select("id", { count: "exact", head: true }),
+    supabase
+      .from("submissions")
+      .select("id", { count: "exact", head: true })
+      .gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+    supabase.from("submissions").select("id", { count: "exact", head: true }).eq("responded", false),
+    supabase.from("submissions").select("id", { count: "exact", head: true }).eq("flag_for_review", true),
+    supabase
+      .from("submissions")
+      .select("id, first_name, seed_type_algorithm, seed_type_coach, q11_season, created_at, responded, priority_response, flag_for_review")
+      .or("priority_response.eq.true,responded.eq.false")
+      .order("created_at", { ascending: false })
+      .limit(20),
+    supabase
+      .from("submissions")
+      .select("id, first_name, seed_type_algorithm, seed_type_coach, q11_season, created_at, responded, priority_response, flag_for_review")
+      .order("created_at", { ascending: false })
+      .limit(10),
+    supabase.from("families").select("family_code, family_name, created_at").order("created_at", { ascending: false }).limit(10),
+    supabase.from("triage_submissions").select("id", { count: "exact", head: true }),
+    supabase.from("triage_submissions").select("id", { count: "exact", head: true }).eq("responded", false),
+    supabase
+      .from("triage_submissions")
+      .select("id, first_name, category, created_at, responded, priority_flag, clinical_referral_flag")
+      .order("created_at", { ascending: false })
+      .limit(10),
+  ]);
 
   return (
     <div className="space-y-10">
@@ -68,6 +91,19 @@ export default async function AdminDashboardPage() {
       <section>
         <h2 className="font-lora text-xl text-soil">Recent submissions</h2>
         <SubmissionTable rows={(recent as SubmissionRow[]) ?? []} emptyMessage="No submissions yet." />
+      </section>
+
+      <section>
+        <div className="flex items-center justify-between">
+          <h2 className="font-lora text-xl text-soil">Recent triage submissions</h2>
+          <Link href="/admin/triage" className="text-sm text-bark hover:text-soil transition">
+            View all →
+          </Link>
+        </div>
+        <p className="mt-1 text-sm text-dark-gray">
+          {triageTotal ?? 0} total · {triageUnresponded ?? 0} unresponded
+        </p>
+        <TriageTable rows={(recentTriage as TriageRow[]) ?? []} emptyMessage="No triage submissions yet." />
       </section>
 
       <section>
@@ -152,4 +188,47 @@ function SubmissionTable({ rows, emptyMessage }: { rows: SubmissionRow[]; emptyM
 
 function Badge({ label }: { label: string }) {
   return <span className="rounded bg-amber px-2 py-0.5 text-xs font-medium text-linen">{label}</span>;
+}
+
+function TriageTable({ rows, emptyMessage }: { rows: TriageRow[]; emptyMessage: string }) {
+  if (rows.length === 0) {
+    return <p className="mt-3 text-sm text-dark-gray">{emptyMessage}</p>;
+  }
+
+  return (
+    <div className="mt-3 overflow-x-auto rounded-lg border border-mid-gray bg-off-white">
+      <table className="w-full text-left text-sm">
+        <thead className="border-b border-mid-gray text-bark">
+          <tr>
+            <th className="px-4 py-3 font-medium">Name</th>
+            <th className="px-4 py-3 font-medium">Category</th>
+            <th className="px-4 py-3 font-medium">Date</th>
+            <th className="px-4 py-3 font-medium">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id} className="border-b border-mid-gray last:border-0">
+              <td className="px-4 py-3">
+                <Link href={`/admin/triage/${row.id}`} className="font-medium text-soil hover:underline">
+                  {row.first_name}
+                </Link>
+              </td>
+              <td className="px-4 py-3 text-dark-gray">{row.category}</td>
+              <td className="px-4 py-3 text-dark-gray">{new Date(row.created_at).toLocaleDateString()}</td>
+              <td className="px-4 py-3">
+                <div className="flex gap-1.5">
+                  {row.priority_flag && <Badge label="Priority" />}
+                  {row.clinical_referral_flag && <Badge label="Clinical" />}
+                  <span className={row.responded ? "text-deep-green" : "text-bark"}>
+                    {row.responded ? "Responded" : "Awaiting response"}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
