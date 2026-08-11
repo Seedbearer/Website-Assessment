@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { QUESTIONS, type ChoiceQuestion } from "@/lib/assessment-data";
@@ -92,6 +92,14 @@ export default function Quiz() {
   }, []);
 
   const [slideIndex, setSlideIndex] = useState(0);
+
+  // Each slide is a new question — without this, advancing (or going back) leaves the reader
+  // scrolled to wherever the previous slide's content ended, so they have to manually scroll up
+  // to see what's actually being asked now.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [slideIndex]);
+
   const [story, setStory] = useState<StoryAnswers>(EMPTY_STORY);
   const [followup, setFollowup] = useState<FollowupAnswers>(EMPTY_FOLLOWUP);
   const [firstName, setFirstName] = useState(() => {

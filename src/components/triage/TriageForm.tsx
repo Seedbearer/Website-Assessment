@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Turnstile } from "@marsidev/react-turnstile";
 import OptionButton from "@/components/assessment/OptionButton";
@@ -58,6 +58,14 @@ const STEPS: Step[] = [
 
 export default function TriageForm() {
   const [stepIndex, setStepIndex] = useState(0);
+
+  // Each step is a new question — without this, advancing (or going back) leaves the reader
+  // scrolled to wherever the previous step's content ended, so they have to manually scroll up
+  // to see what's actually being asked now.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [stepIndex]);
+
   const [answers, setAnswers] = useState<Answers>(EMPTY_ANSWERS);
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
