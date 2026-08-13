@@ -50,7 +50,7 @@ export default function CoachingPage() {
             {[
               "Twelve weekly online classes, in a small group of parents doing this work together",
               "Twelve weekly one-on-one coaching sessions, just you and me",
-              "Twelve weeks, September 1 through November 24",
+              "Twelve weeks — dates TBD, Fall 2026",
             ].map((item) => (
               <div key={item} className="rounded-lg border border-mid-gray bg-off-white p-4 text-lg text-dark-gray">
                 {item}
@@ -81,7 +81,7 @@ export default function CoachingPage() {
               becomes, including the family version that follows. Classes are led live, by me.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-dark-gray">
-              Founding Pilot begins September 1, 2026. Spots are capped and will close once
+              Founding Pilot begins Fall 2026 — dates TBD. Spots are capped and will close once
               they&rsquo;re filled.
             </p>
 
