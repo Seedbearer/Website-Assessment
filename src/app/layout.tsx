@@ -46,7 +46,11 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo.svg`,
   description: SITE_DESCRIPTION,
-  sameAs: ["https://www.youtube.com/@SeedBearerFamily"],
+  sameAs: [
+    "https://www.youtube.com/@SeedBearerFamily",
+    "https://www.instagram.com/seedbearer_family/",
+    "https://www.facebook.com/profile.php?id=61591608176436",
+  ],
 };
 
 export default function RootLayout({

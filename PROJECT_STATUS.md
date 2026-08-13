@@ -164,8 +164,10 @@ an explicit user decision, not something to reconsider without asking again.
   sections present in the client's updated source doc: a two-door CTA ("Something is hard right
   now" → `/triage`, "I want to understand who we are" → `/assessment`) and a coaching-upgrade CTA
   → `/coaching`, replacing the old single "Want to go deeper?" CTA.
-- **Instagram link** — still a placeholder (`https://instagram.com`) in the footer, waiting on
-  the real handle.
+- **Instagram + Facebook links** — done 2026-08-12. Real handles in the footer
+  (`src/components/ui/Footer.tsx`) and the sitewide Organization JSON-LD `sameAs` array
+  (`src/app/layout.tsx`): `instagram.com/seedbearer_family` and Facebook profile
+  `id=61591608176436` (no vanity URL on that page yet).
 - **About page photo** — done 2026-08-06, `public/james-headshot.png`, wired into
   `src/app/(public)/about/page.tsx` via `next/image`.
 - **Footer disclaimer wording** — currently a reasonable default; no reference doc ever specified

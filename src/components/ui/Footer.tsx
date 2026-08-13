@@ -4,13 +4,15 @@ export default function Footer() {
       <div className="mx-auto max-w-4xl px-4 py-16 md:px-8">
         <div className="flex flex-col items-center gap-4 text-center">
           <span className="font-lora text-lg text-soil">Seedbearer Family</span>
-          {/* TODO: Instagram is still a placeholder — replace once the client provides it */}
           <div className="flex gap-6 text-sm text-bark">
             <a href="https://www.youtube.com/@SeedBearerFamily" className="hover:text-soil transition">
               YouTube
             </a>
-            <a href="https://instagram.com" className="hover:text-soil transition">
+            <a href="https://www.instagram.com/seedbearer_family/" className="hover:text-soil transition">
               Instagram
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61591608176436" className="hover:text-soil transition">
+              Facebook
             </a>
           </div>
           {/* TODO: confirm exact disclaimer wording — no reference doc supplied one */}
