@@ -12,6 +12,7 @@ export type PostFrontmatter = {
   date: string;
   category: PostCategory;
   youtube_id?: string;
+  image?: string;
   excerpt?: string;
   seo_title?: string;
   seo_description?: string;

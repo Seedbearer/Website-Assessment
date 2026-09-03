@@ -34,7 +34,7 @@ export default async function TriageListPage({
     <div className="space-y-6">
       <div>
         <h1 className="font-lora text-3xl text-soil">Triage Submissions</h1>
-        <p className="mt-1 text-dark-gray">The Family Triage Assessment — "Door 1" for families in acute difficulty.</p>
+        <p className="mt-1 text-dark-gray">The Family Triage Assessment — &ldquo;Door 1&rdquo; for families in acute difficulty.</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

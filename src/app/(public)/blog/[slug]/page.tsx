@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPostBySlug, getRelatedPosts } from "@/lib/blog";
@@ -78,6 +79,18 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               title={post.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+            />
+          </div>
+        )}
+
+        {!post.youtube_id && post.image && (
+          <div className="relative aspect-video overflow-hidden rounded-lg">
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
             />
           </div>
         )}

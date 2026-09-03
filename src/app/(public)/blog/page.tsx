@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAllPosts, type PostCategory } from "@/lib/blog";
 
 // Rendered per-request so scheduled (future-dated) posts appear on their date without needing a
@@ -56,12 +57,19 @@ export default function BlogIndexPage({ searchParams }: { searchParams: { catego
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="block rounded-lg border border-mid-gray bg-off-white p-6 hover:border-bark"
+                className="block overflow-hidden rounded-lg border border-mid-gray bg-off-white hover:border-bark"
               >
-                <p className="text-xs uppercase tracking-wide text-bark">{post.category}</p>
-                <h2 className="mt-2 font-lora text-xl text-soil">{post.title}</h2>
-                {post.excerpt && <p className="mt-2 text-sm text-dark-gray">{post.excerpt}</p>}
-                <p className="mt-4 text-xs text-bark">{new Date(post.date).toLocaleDateString()}</p>
+                {post.image && (
+                  <div className="relative aspect-[16/9] w-full">
+                    <Image src={post.image} alt={post.title} fill className="object-cover" />
+                  </div>
+                )}
+                <div className="p-6">
+                  <p className="text-xs uppercase tracking-wide text-bark">{post.category}</p>
+                  <h2 className="mt-2 font-lora text-xl text-soil">{post.title}</h2>
+                  {post.excerpt && <p className="mt-2 text-sm text-dark-gray">{post.excerpt}</p>}
+                  <p className="mt-4 text-xs text-bark">{new Date(post.date).toLocaleDateString()}</p>
+                </div>
               </Link>
             ))}
           </div>
