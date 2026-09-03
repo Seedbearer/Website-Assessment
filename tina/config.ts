@@ -39,6 +39,7 @@ export default defineConfig({
             required: true,
           },
           { type: "string", name: "youtube_id", label: "YouTube video ID" },
+          { type: "image", name: "image", label: "Featured image" },
           { type: "string", name: "excerpt", label: "Excerpt (150 chars, for index + SEO)", ui: { component: "textarea" } },
           { type: "string", name: "seo_title", label: "SEO title (optional, defaults to Title)" },
           { type: "string", name: "seo_description", label: "SEO description (optional, defaults to Excerpt)" },
