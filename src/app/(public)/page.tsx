@@ -14,7 +14,7 @@ export default function HomePage() {
             Who do you think you are?
           </h1>
           <p className="mt-4 max-w-xl text-xl italic text-bark">
-            Helping families uncover who they were always meant to be — one seed at a time.
+            Helping Christian parents and families rediscover who God made them to be — one seed at a time.
           </p>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-dark-gray">
             We believe every person carries a seed — a unique expression of the image of God —
@@ -32,6 +32,7 @@ export default function HomePage() {
             <DoorCard
               heading="I want to understand who we are"
               body="Take the Seed Assessment — ten minutes to discover the design placed in you and your family before birth."
+              footnote="Restoring the foundations of generations — one family at a time."
               href="/assessment"
               cta="Take the Seed Assessment"
             />
@@ -52,15 +53,15 @@ export default function HomePage() {
           {[
             {
               heading: "Identity",
-              body: "Every person carries a unique seed — a specific design placed in them before birth. Our work begins with helping you discover what yours is.",
+              body: "Every person carries a unique seed — a specific design placed in them by God before birth. Our work begins with helping you discover what yours is.",
             },
             {
               heading: "Connection",
-              body: "Identity grows in relationship. The most powerful soil a child can grow in is a family that knows who it is — and is becoming that, together.",
+              body: "Identity grows in relationship. Family is the soil God designed for that seed to grow in — where identity is either nourished or neglected.",
             },
             {
               heading: "Becoming",
-              body: "Change is possible. It takes time, honesty, and the right conditions. We walk alongside families through every season — Winter through Summer.",
+              body: "Change is possible. Transformation through time, honesty, and the conditions Scripture calls restoration. We walk alongside families through every season — Winter through Summer.",
             },
           ].map((col) => (
             <div key={col.heading} className="text-center">
@@ -93,11 +94,24 @@ export default function HomePage() {
   );
 }
 
-function DoorCard({ heading, body, href, cta }: { heading: string; body: string; href: string; cta: string }) {
+function DoorCard({
+  heading,
+  body,
+  footnote,
+  href,
+  cta,
+}: {
+  heading: string;
+  body: string;
+  footnote?: string;
+  href: string;
+  cta: string;
+}) {
   return (
     <div className="flex flex-col rounded-lg border border-mid-gray bg-off-white p-6 text-left">
       <h3 className="font-lora text-xl text-soil">{heading}</h3>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-dark-gray">{body}</p>
+      {footnote && <p className="mt-2 text-xs italic text-bark">{footnote}</p>}
       <Link
         href={href}
         className="mt-4 inline-block rounded bg-deep-green px-5 py-2.5 text-center text-sm font-medium text-linen transition hover:opacity-90"
