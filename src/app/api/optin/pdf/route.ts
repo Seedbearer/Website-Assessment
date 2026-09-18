@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { isRateLimited } from "@/lib/rate-limit";
-import { sendPdfOptinEmail } from "@/lib/notify";
+import { sendPdfOptinEmail, recordPdfOptinLead } from "@/lib/notify";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -35,30 +34,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
   }
 
-  let writer;
-  try {
-    writer = getSupabaseAdmin();
-  } catch (err) {
-    console.error("optin/pdf: Supabase is not configured", err);
-    return NextResponse.json({ error: "Could not save your request. Please try again." }, { status: 500 });
-  }
-
-  const { error } = await writer.from("pdf_optins").insert({ email, slug, source_path: sourcePath || null });
-  if (error) {
-    console.error("optin/pdf: Supabase insert failed", error);
-    return NextResponse.json({ error: "Could not save your request. Please try again." }, { status: 500 });
-  }
-
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-  // Awaited, not fire-and-forget — Netlify's serverless functions can freeze/terminate execution
-  // immediately after the response is returned (see the same note on the triage/assessment routes).
-  await sendPdfOptinEmail({
-    email,
-    title,
-    pdfUrl: `${siteUrl}${pdfPath}`,
-    postUrl: `${siteUrl}/blog/${slug}`,
-  });
+  // Both awaited, not fire-and-forget — Netlify's serverless functions can freeze/terminate
+  // execution immediately after the response is returned (see the same note on the
+  // triage/assessment routes). recordPdfOptinLead never throws (see notify.ts), so a Resend
+  // Contacts failure can't block the person from getting their email.
+  await Promise.all([
+    recordPdfOptinLead({ email, slug, title, sourcePath: sourcePath || null }),
+    sendPdfOptinEmail({
+      email,
+      title,
+      pdfUrl: `${siteUrl}${pdfPath}`,
+      postUrl: `${siteUrl}/blog/${slug}`,
+    }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }
