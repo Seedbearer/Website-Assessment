@@ -4,6 +4,7 @@ export const metadata = {
   title: "Get Help Now",
   description:
     "A short, honest check-in for families in a hard moment right now — six questions, then a matched resource sent straight to your inbox.",
+  alternates: { canonical: "https://seedbearerfamily.com/triage" },
 };
 
 export default function TriagePage() {

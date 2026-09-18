@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 
+export const metadata = {
+  alternates: { canonical: "https://seedbearerfamily.com" },
+};
+
 export default function HomePage() {
   return (
     <>

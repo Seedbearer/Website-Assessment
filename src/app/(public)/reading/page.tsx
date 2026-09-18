@@ -4,6 +4,7 @@ export const metadata = {
   title: "Recommended Reading",
   description:
     "Books that shaped the Seedbearer framework — theology and identity, attachment psychology, neuroscience, communication, boundaries, and family connection.",
+  alternates: { canonical: "https://seedbearerfamily.com/reading" },
 };
 
 export default function ReadingPage() {

@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Work With Me",
   description: "A twelve-week program for parents ready to become who they were always meant to be.",
+  alternates: { canonical: "https://seedbearerfamily.com/coaching" },
 };
 
 export default function CoachingPage() {

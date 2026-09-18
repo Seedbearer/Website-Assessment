@@ -4,6 +4,7 @@ export const metadata = {
   title: "The Free Seed Assessment",
   description:
     "A free 10-minute reflection that helps you begin to see your unique design — and your child's. I read every submission personally and respond within 48 hours.",
+  alternates: { canonical: "https://seedbearerfamily.com/assessment" },
 };
 
 export default function AssessmentLandingPage() {
