@@ -150,3 +150,80 @@ export async function sendTriageResourceEmail(params: { firstName: string; email
     console.error("sendTriageResourceEmail: failed to send", err);
   }
 }
+
+// Lead-magnet PDF delivery — the family-facing email for <PdfOptinForm>. Sends a link rather than
+// an attachment, matching sendTriageResourceEmail's pattern (and avoiding attachment-size/spam-
+// filter quirks on some email clients). `pdfUrl` and `title` are passed in per-post so this one
+// function covers every future PDF opt-in, not just this one.
+export async function sendPdfOptinEmail(params: { email: string; pdfUrl: string; title: string; postUrl: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("sendPdfOptinEmail: RESEND_API_KEY not set — skipping");
+    return;
+  }
+
+  const resend = new Resend(apiKey);
+  const text = [
+    `Here's your copy of "${params.title}":`,
+    "",
+    params.pdfUrl,
+    "",
+    `If you haven't already, the full post is here: ${params.postUrl}`,
+    "",
+    "— Seedbearer Family",
+  ].join("\n");
+
+  try {
+    const { error } = await resend.emails.send({
+      from: "Seedbearer Family <hello@seedbearerfamily.com>",
+      to: params.email,
+      subject: `Your PDF: ${params.title}`,
+      text,
+    });
+    if (error) {
+      console.error("sendPdfOptinEmail: Resend API returned an error", error);
+    }
+  } catch (err) {
+    console.error("sendPdfOptinEmail: failed to send", err);
+  }
+}
+
+// Records a PDF opt-in as a Resend Contact — this is the lead store, not just the email sender.
+// Deliberately a SEPARATE API key (RESEND_CONTACTS_API_KEY) from the one used to send email
+// (RESEND_API_KEY): that key is restricted to send-only by design, and contact read/write is a
+// meaningfully more sensitive permission than "can send an email", so it gets its own key rather
+// than broadening the send key's scope.
+//
+// `lead_magnet_slug`, `lead_magnet_title`, and `source_path` are custom Contact Properties —
+// create them once per Resend account before this will work (Settings > Contacts > Properties,
+// or via resend.contactProperties.create({ key, type: 'string' })). Already done for this
+// project's account as of the PDF opt-in launch.
+//
+// Upsert, not append-only: if the same email opts into a second lead magnet later, these
+// properties are overwritten to reflect the most recent opt-in, not a full history. Good enough
+// for "where did this lead come from" at this scale — if per-opt-in history is ever needed,
+// that's what Resend's Events API is for, not Contact Properties.
+export async function recordPdfOptinLead(params: { email: string; slug: string; title: string; sourcePath: string | null }) {
+  const apiKey = process.env.RESEND_CONTACTS_API_KEY;
+  if (!apiKey) {
+    console.warn("recordPdfOptinLead: RESEND_CONTACTS_API_KEY not set — skipping (email will still send)");
+    return;
+  }
+
+  const resend = new Resend(apiKey);
+  const properties = {
+    lead_magnet_slug: params.slug,
+    lead_magnet_title: params.title,
+    source_path: params.sourcePath,
+  };
+
+  const { error: createError } = await resend.contacts.create({ email: params.email, properties });
+  if (!createError) return;
+
+  // Most likely cause of a create failure: the contact already exists. Update instead of
+  // treating this as fatal — the person still gets their PDF either way.
+  const { error: updateError } = await resend.contacts.update({ email: params.email, properties });
+  if (updateError) {
+    console.error("recordPdfOptinLead: Resend API returned an error on both create and update", { createError, updateError });
+  }
+}

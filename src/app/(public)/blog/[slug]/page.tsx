@@ -4,6 +4,10 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import Button from "@/components/ui/Button";
+import PdfOptinForm from "@/components/blog/PdfOptinForm";
+
+// Custom components a post's MDX body can reference directly by tag name (e.g. <PdfOptinForm ... />).
+const mdxComponents = { PdfOptinForm };
 
 // Rendered per-request rather than statically generated at build time — required for the
 // date-based publish gating in lib/blog.ts to actually take effect on the day a post's date
@@ -100,7 +104,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <p className="mt-2 text-sm text-bark">{new Date(post.date).toLocaleDateString()}</p>
 
         <div className="prose prose-lg mt-8 max-w-none text-dark-gray prose-headings:font-lora prose-headings:text-soil prose-a:text-deep-green">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={mdxComponents} />
         </div>
 
         <div className="mt-12 rounded-lg bg-soil p-6 text-center text-linen">
