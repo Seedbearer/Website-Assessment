@@ -16,7 +16,7 @@ const SITE_URL = "https://seedbearerfamily.com";
 const SITE_NAME = "Seedbearer Family";
 const SITE_TAGLINE = "Family Coaching";
 const SITE_DESCRIPTION =
-  "Helping families uncover who they were always meant to be. Free Seed Assessment, one-to-one coaching, and weekly content for parents and teenagers.";
+  "Helping Christian parents and families rediscover who God made them to be. Free Seed Assessment, one-to-one coaching, and weekly content for parents and teenagers.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -49,6 +50,11 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo.svg`,
   description: SITE_DESCRIPTION,
+  founder: {
+    "@type": "Person",
+    name: "James",
+    jobTitle: "Founder",
+  },
   sameAs: [
     "https://www.youtube.com/@SeedBearerFamily",
     "https://www.instagram.com/seedbearer_family/",

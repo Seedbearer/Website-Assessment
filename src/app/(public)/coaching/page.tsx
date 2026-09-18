@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Work With Me",
   description: "A twelve-week program for parents ready to become who they were always meant to be.",
+  alternates: { canonical: "https://seedbearerfamily.com/coaching" },
 };
 
 export default function CoachingPage() {
@@ -22,12 +23,11 @@ export default function CoachingPage() {
           <h2 className="font-lora text-2xl text-soil md:text-3xl">Every seed needs the right soil.</h2>
           <div className="mt-6 space-y-4 text-left text-lg leading-relaxed text-dark-gray">
             <p>
-              This program is built around two things happening every week: a shared class with a
-              small group of parents walking the same road, and a private coaching session just
-              for you.
+              This program is built around two things: twelve online classes you work through at
+              your own pace, and a private coaching session with your family or parent group.
             </p>
             <p>
-              The class is where the teaching happens — twelve sessions moving through four
+              The classes are where the teaching happens — twelve sessions moving through four
               seasons: <strong>Winter</strong>, where we name what&rsquo;s real without shame;{" "}
               <strong>Thaw</strong>, where you receive what you didn&rsquo;t get to receive the
               first time around; <strong>Spring</strong>, where you discover the design underneath
@@ -35,8 +35,8 @@ export default function CoachingPage() {
               <strong>Summer</strong>, where it becomes a system you actually live.
             </p>
             <p>
-              The coaching session is where it becomes yours — personal, one-on-one, working
-              through what the week&rsquo;s teaching actually means for your family.
+              The coaching session is where it becomes yours — personal, with your own family or
+              parent group, working through what the classes actually mean for your family.
             </p>
           </div>
         </div>
@@ -48,8 +48,8 @@ export default function CoachingPage() {
           <h2 className="font-lora text-2xl text-soil md:text-3xl">What&rsquo;s Included</h2>
           <div className="mt-6 grid gap-4 text-left md:grid-cols-2">
             {[
-              "Twelve weekly online classes, in a small group of parents doing this work together",
-              "Twelve weekly one-on-one coaching sessions, just you and me",
+              "Twelve online classes, at your own pace",
+              "Twelve coaching sessions with your family or parent group",
               "Twelve weeks — dates TBD, Fall 2026",
             ].map((item) => (
               <div key={item} className="rounded-lg border border-mid-gray bg-off-white p-4 text-lg text-dark-gray">
@@ -78,7 +78,9 @@ export default function CoachingPage() {
             <p className="mt-4 text-lg leading-relaxed text-dark-gray">
               I&rsquo;m opening this first round to a small group — five to eight parents — at 50%
               off: <strong>$1,400</strong>. This is a pilot: your honest feedback shapes what this
-              becomes, including the family version that follows. Classes are led live, by me.
+              becomes, including the family version that follows. Classes are pre-recorded, so you
+              move through them on your own schedule — coaching sessions are where you and I (or
+              your parent group) meet.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-dark-gray">
               Founding Pilot begins Fall 2026 — dates TBD. Spots are capped and will close once

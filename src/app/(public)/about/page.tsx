@@ -5,11 +5,29 @@ export const metadata = {
   title: "My Story",
   description:
     "How a vision in 1999 led to 25 years of work with youth and families — and what Seedbearer Family Coaching is building toward.",
+  alternates: { canonical: "https://seedbearerfamily.com/about" },
+};
+
+// Named-founder entity for AI/search engines — pairs with the sitewide Organization schema in
+// the root layout so "James" resolves as a distinct, structured person, not just prose on a page.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "James",
+  jobTitle: "Founder",
+  image: "https://seedbearerfamily.com/james-headshot.png",
+  worksFor: { "@type": "Organization", name: "Seedbearer Family", url: "https://seedbearerfamily.com" },
+  description:
+    "Founder of Seedbearer Family. 25 years of work in youth ministry, aged-out foster care, and residential treatment for at-risk teenagers.",
 };
 
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       {/* Section 1 — Page header */}
       <section className="bg-linen px-4 py-16 md:px-8">
         <div className="mx-auto max-w-4xl text-center">

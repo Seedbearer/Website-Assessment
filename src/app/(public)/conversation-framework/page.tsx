@@ -5,6 +5,7 @@ export const metadata = {
   title: "The Conversation Framework",
   description:
     "A practical guide for families on discipline, boundaries, and accountability — from a place of strength rather than fear. Free resource from Seedbearer Family.",
+  alternates: { canonical: "https://seedbearerfamily.com/conversation-framework" },
 };
 
 type Step = {
@@ -108,9 +109,29 @@ const HARD_MOMENTS = [
   },
 ];
 
+// The Five Steps are a genuine ordered procedure — marking them up as HowTo gives AI answer
+// engines and rich-result snippets a structured version to extract instead of only prose.
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "The Conversation Framework: Five Steps",
+  description:
+    "A five-step process for family discipline, boundaries, and accountability conversations — from a place of strength rather than fear.",
+  step: STEPS.map((step) => ({
+    "@type": "HowToStep",
+    position: Number(step.num),
+    name: step.title,
+    text: step.body,
+  })),
+};
+
 export default function ConversationFrameworkPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
       {/* Hero */}
       <section className="bg-soil px-4 py-20 text-center md:px-8">
         <div className="mx-auto max-w-3xl">
