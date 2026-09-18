@@ -150,3 +150,40 @@ export async function sendTriageResourceEmail(params: { firstName: string; email
     console.error("sendTriageResourceEmail: failed to send", err);
   }
 }
+
+// Lead-magnet PDF delivery — the family-facing email for <PdfOptinForm>. Sends a link rather than
+// an attachment, matching sendTriageResourceEmail's pattern (and avoiding attachment-size/spam-
+// filter quirks on some email clients). `pdfUrl` and `title` are passed in per-post so this one
+// function covers every future PDF opt-in, not just this one.
+export async function sendPdfOptinEmail(params: { email: string; pdfUrl: string; title: string; postUrl: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("sendPdfOptinEmail: RESEND_API_KEY not set — skipping");
+    return;
+  }
+
+  const resend = new Resend(apiKey);
+  const text = [
+    `Here's your copy of "${params.title}":`,
+    "",
+    params.pdfUrl,
+    "",
+    `If you haven't already, the full post is here: ${params.postUrl}`,
+    "",
+    "— Seedbearer Family",
+  ].join("\n");
+
+  try {
+    const { error } = await resend.emails.send({
+      from: "Seedbearer Family <hello@seedbearerfamily.com>",
+      to: params.email,
+      subject: `Your PDF: ${params.title}`,
+      text,
+    });
+    if (error) {
+      console.error("sendPdfOptinEmail: Resend API returned an error", error);
+    }
+  } catch (err) {
+    console.error("sendPdfOptinEmail: failed to send", err);
+  }
+}
