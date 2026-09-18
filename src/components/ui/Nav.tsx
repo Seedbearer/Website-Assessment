@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: "/coaching", label: "Coaching" },
   { href: "/conversation-framework", label: "Conversation Framework" },
   { href: "/blog", label: "Blog" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 export default function Nav() {
