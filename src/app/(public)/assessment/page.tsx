@@ -49,6 +49,12 @@ export default function AssessmentLandingPage() {
               with what you shared. You&rsquo;ll hear from me within 48 hours.
             </p>
           </div>
+          <a
+            href="/assessment/sample"
+            className="mt-6 inline-block text-sm font-medium text-deep-green underline hover:text-soil"
+          >
+            See a sample Family Map — what you actually get on the other side →
+          </a>
         </div>
       </section>
 
